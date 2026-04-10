@@ -452,18 +452,27 @@ sections.forEach(s => sectionObserver.observe(s));
      (bloqueo en file://), esperamos el primer gesto del usuario. */
   audio.volume = parseInt(mpVolume.value, 10) / 100;
 
-  function unmute() { audio.muted = false; }
+  /* ---- Autoplay ----
+     El <audio> arranca muted+autoplay (siempre permitido).
+     Intentamos desmutear de inmediato; si el browser lo bloquea
+     (primera visita sin interacción previa), lo hacemos en el
+     primer gesto del usuario. Ambos caminos siempre están activos. */
+  audio.volume = parseInt(mpVolume.value, 10) / 100;
 
-  if (!audio.paused) {
-    unmute();
-  } else {
-    audio.addEventListener('play', unmute, { once: true });
-    // Fallback: primer gesto del usuario arranca y desmuta
-    const events = ['click', 'touchstart', 'keydown', 'scroll', 'mousemove'];
-    function startOnGesture() {
-      audio.play().then(unmute).catch(() => {});
-      events.forEach(ev => document.removeEventListener(ev, startOnGesture));
-    }
-    events.forEach(ev => document.addEventListener(ev, startOnGesture, { passive: true }));
+  const gestureEvents = ['click', 'touchstart', 'keydown', 'scroll', 'mousemove'];
+
+  function unmuteAudio() {
+    if (!audio.muted) return;
+    audio.muted = false;
+    if (audio.paused) audio.play().catch(() => {});
+    gestureEvents.forEach(ev => document.removeEventListener(ev, unmuteAudio));
   }
+
+  // Siempre registramos el fallback por gesto
+  gestureEvents.forEach(ev =>
+    document.addEventListener(ev, unmuteAudio, { passive: true, once: false })
+  );
+
+  // Intento inmediato (funciona si el navegador tiene MEI alto o ya hubo interacción)
+  audio.muted = false;
 }());
