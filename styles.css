@@ -57,13 +57,18 @@ button {
 }
 
 /* =============================================
-   PARTÍCULAS CANVAS (dentro del hero)
+   PARTÍCULAS CANVAS
    ============================================= */
 .particles-canvas {
   position: absolute;
   inset: 0;
   z-index: 1;
   pointer-events: none;
+}
+
+/* En secciones va detrás del contenido */
+.particles-canvas--section {
+  z-index: -1;
 }
 
 /* =============================================
@@ -280,6 +285,9 @@ button {
    MENSAJE INTRODUCTORIO
    ============================================= */
 .intro-msg {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
   background-color: var(--dark);
   padding: 80px 24px;
   text-align: center;

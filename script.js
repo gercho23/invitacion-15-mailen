@@ -18,23 +18,25 @@ window.addEventListener('orientationchange', () => setTimeout(setVh, 150));
    PARTÍCULAS — ESTRELLAS FLOTANDO EN EL HERO
    ============================================= */
 (function () {
-  const canvas = document.getElementById('particles');
-  const ctx    = canvas.getContext('2d');
-  const hero   = document.getElementById('hero');
-  let particles = [];
-  let lastFrame = 0;
-  const FPS     = 30;
-  const INTERVAL = 1000 / FPS;
+  const INTERVAL = 1000 / 30; // 30 fps
+  let lastFrame  = 0;
 
-  function resize() {
-    canvas.width  = hero.offsetWidth;
-    canvas.height = hero.offsetHeight;
-  }
+  // Un registro por sección: canvas + elemento host
+  const layers = [
+    { id: 'particles',          hostId: 'hero',      maxCount: 45 },
+    { id: 'particles-intro',    hostSel: '.intro-msg', maxCount: 25 },
+    { id: 'particles-countdown',hostId: 'countdown',  maxCount: 25 },
+  ].map(cfg => {
+    const canvas = document.getElementById(cfg.id);
+    const host   = cfg.hostId ? document.getElementById(cfg.hostId)
+                              : document.querySelector(cfg.hostSel);
+    return { canvas, ctx: canvas.getContext('2d'), host, particles: [], maxCount: cfg.maxCount };
+  });
 
-  function makeParticle(randomY = false) {
+  function makeParticle(w, h, randomY) {
     return {
-      x:          Math.random() * canvas.width,
-      y:          randomY ? Math.random() * canvas.height : canvas.height + 12,
+      x:          Math.random() * w,
+      y:          randomY ? Math.random() * h : h + 12,
       size:       Math.random() * 2.2 + 0.5,
       vy:         -(Math.random() * 0.35 + 0.08),
       vx:         (Math.random() - 0.5) * 0.12,
@@ -44,8 +46,7 @@ window.addEventListener('orientationchange', () => setTimeout(setVh, 150));
     };
   }
 
-  // Estrella de 4 puntas sin shadowBlur (costoso)
-  function drawStar(x, y, size, alpha) {
+  function drawStar(ctx, x, y, size, alpha) {
     ctx.globalAlpha = alpha;
     ctx.fillStyle   = '#d8d8d8';
     ctx.beginPath();
@@ -60,9 +61,12 @@ window.addEventListener('orientationchange', () => setTimeout(setVh, 150));
   }
 
   function init() {
-    particles = [];
-    const count = Math.min(45, Math.floor((canvas.width * canvas.height) / 16000));
-    for (let i = 0; i < count; i++) particles.push(makeParticle(true));
+    layers.forEach(l => {
+      l.canvas.width  = l.host.offsetWidth;
+      l.canvas.height = l.host.offsetHeight;
+      const count = Math.min(l.maxCount, Math.floor((l.canvas.width * l.canvas.height) / 16000));
+      l.particles = Array.from({ length: count }, () => makeParticle(l.canvas.width, l.canvas.height, true));
+    });
   }
 
   function draw(ts) {
@@ -70,22 +74,23 @@ window.addEventListener('orientationchange', () => setTimeout(setVh, 150));
     if (ts - lastFrame < INTERVAL) return;
     lastFrame = ts;
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach((p, i) => {
-      p.x += p.vx;
-      p.y += p.vy;
-      p.alpha += p.alphaSpeed * p.alphaDir;
-      if (p.alpha > 0.6 || p.alpha < 0.03) p.alphaDir *= -1;
-      if (p.y < -12) particles[i] = makeParticle(false);
-      drawStar(p.x, p.y, p.size, p.alpha);
+    layers.forEach(l => {
+      const { ctx, canvas, particles } = l;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach((p, i) => {
+        p.x += p.vx;  p.y += p.vy;
+        p.alpha += p.alphaSpeed * p.alphaDir;
+        if (p.alpha > 0.6 || p.alpha < 0.03) p.alphaDir *= -1;
+        if (p.y < -12) l.particles[i] = makeParticle(canvas.width, canvas.height, false);
+        drawStar(ctx, p.x, p.y, p.size, p.alpha);
+      });
+      ctx.globalAlpha = 1;
     });
-    ctx.globalAlpha = 1;
   }
 
-  resize();
   init();
   requestAnimationFrame(draw);
-  window.addEventListener('resize', () => { resize(); init(); });
+  window.addEventListener('resize', init);
 })();
 
 
