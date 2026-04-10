@@ -870,8 +870,20 @@ button {
   margin-bottom: 14px;
 }
 
+.form-label {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  color: var(--silver-dark);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
 .form-group input,
-.form-group textarea {
+.form-group textarea,
+.form-group select {
   width: 100%;
   background: rgba(255, 255, 255, 0.025);
   border: 1px solid rgba(192, 192, 192, 0.18);
@@ -884,6 +896,19 @@ button {
   transition: border-color var(--transition), background var(--transition);
   resize: none;
   letter-spacing: 0.04em;
+  appearance: none;
+}
+
+.form-group select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  cursor: pointer;
+}
+
+.form-group select option {
+  background: #111;
+  color: var(--white);
 }
 
 .form-group input::placeholder,
@@ -893,7 +918,8 @@ button {
 }
 
 .form-group input:focus,
-.form-group textarea:focus {
+.form-group textarea:focus,
+.form-group select:focus {
   border-color: rgba(192, 192, 192, 0.45);
   background: rgba(255, 255, 255, 0.04);
 }

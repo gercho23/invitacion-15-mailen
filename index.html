@@ -360,11 +360,7 @@
   </section>
 
   <!-- ============================
-       RSVP
-       Para activar el formulario:
-       1. Creá una cuenta gratis en https://formspree.io
-       2. Creá un nuevo form y copiá el ID
-       3. Reemplazá "YOUR_FORM_ID" con tu ID real en el atributo action
+       RSVP — datos enviados a Google Sheets via Apps Script
   ============================= -->
   <section id="rsvp" class="section section--deeper">
     <div class="container">
@@ -379,12 +375,7 @@
         <p class="section-sub">Completá tus datos para confirmar tu lugar</p>
       </div>
 
-      <form
-        class="rsvp-form reveal"
-        id="rsvpForm"
-        action="https://formspree.io/f/YOUR_FORM_ID"
-        method="POST"
-      >
+      <form class="rsvp-form reveal" id="rsvpForm">
         <div class="form-row">
           <div class="form-group">
             <input
@@ -406,8 +397,20 @@
           </div>
         </div>
         <div class="form-group">
+          <label class="form-label">¿Cuántas personas confirman? (incluite vos)</label>
+          <select name="cantidad" required>
+            <option value="" disabled selected>Seleccioná</option>
+            <option value="1">1 persona</option>
+            <option value="2">2 personas</option>
+            <option value="3">3 personas</option>
+            <option value="4">4 personas</option>
+            <option value="5">5 personas</option>
+            <option value="6">6 o más personas</option>
+          </select>
+        </div>
+        <div class="form-group">
           <textarea
-            name="restriccion_alimenticia"
+            name="restriccion"
             placeholder="¿Tenés alguna restricción alimenticia? (opcional)"
             rows="3"
           ></textarea>

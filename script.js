@@ -323,9 +323,10 @@ document.getElementById('downloadIcs').addEventListener('click', () => {
 /* =============================================
    FORMULARIO DE RSVP
    Requiere cuenta en https://formspree.io
-   Reemplazá "YOUR_FORM_ID" en index.html
-   con el ID de tu formulario.
+   Los datos se envían a Google Sheets via Apps Script.
    ============================================= */
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxIjeK-nMKnbCzoVjMXQ_u0IMHllLtod-C_XdlXWlC4KBDyRjeI46nQorm9Uue7Zjs/exec';
+
 const rsvpForm    = document.getElementById('rsvpForm');
 const rsvpSuccess = document.getElementById('rsvpSuccess');
 
@@ -337,20 +338,24 @@ rsvpForm.addEventListener('submit', async (e) => {
   submitBtn.textContent = 'Enviando…';
   submitBtn.disabled = true;
 
+  const data = {
+    nombre:    rsvpForm.querySelector('[name="nombre"]').value.trim(),
+    apellido:  rsvpForm.querySelector('[name="apellido"]').value.trim(),
+    cantidad:  rsvpForm.querySelector('[name="cantidad"]').value,
+    restriccion: rsvpForm.querySelector('[name="restriccion"]').value.trim(),
+  };
+
   try {
-    const res = await fetch(rsvpForm.action, {
+    await fetch(SHEETS_URL, {
       method:  'POST',
-      body:    new FormData(rsvpForm),
-      headers: { 'Accept': 'application/json' },
+      mode:    'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(data),
     });
 
-    if (res.ok) {
-      rsvpForm.style.display   = 'none';
-      rsvpSuccess.style.display = 'block';
-      launchConfetti();
-    } else {
-      throw new Error('response not ok');
-    }
+    rsvpForm.style.display    = 'none';
+    rsvpSuccess.style.display = 'block';
+    launchConfetti();
   } catch {
     submitBtn.textContent = original;
     submitBtn.disabled = false;
