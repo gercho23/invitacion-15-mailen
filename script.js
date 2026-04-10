@@ -460,15 +460,8 @@ sections.forEach(s => sectionObserver.observe(s));
    Canción: Justin Bieber - Anyone
    ============================================= */
 (function () {
-  const audio          = document.getElementById('mpAudio');
-  const mpBtn          = document.getElementById('mpBtn');
-  const mpPanel        = document.getElementById('mpPanel');
-  const mpClose        = document.getElementById('mpClose');
-  const mpPlay         = document.getElementById('mpPlay');
-  const mpIconPlay     = document.getElementById('mpIconPlay');
-  const mpIconPause    = document.getElementById('mpIconPause');
-  const mpVolume       = document.getElementById('mpVolume');
-  const mpBars         = document.getElementById('mpBars');
+  const audio            = document.getElementById('mpAudio');
+  const mpBtn            = document.getElementById('mpBtn');
   const mpNotif          = document.getElementById('mpNotif');
   const mpNotifClose     = document.getElementById('mpNotifClose');
   const mpNotifBars      = document.getElementById('mpNotifBars');
@@ -476,106 +469,51 @@ sections.forEach(s => sectionObserver.observe(s));
   const mpNotifIconPlay  = document.getElementById('mpNotifIconPlay');
   const mpNotifIconPause = document.getElementById('mpNotifIconPause');
 
-  audio.volume = parseInt(mpVolume.value, 10) / 100;
+  audio.volume = 0.6;
 
-  const isMobile = () => window.innerWidth <= 640;
+  /* ---- Mostrar / ocultar notificación ---- */
+  function showNotif() {
+    mpNotif.classList.remove('gone', 'out');
+    mpBtn.classList.add('active');
+  }
 
-  /* ---- Notificación ---- */
-  function dismissNotif() {
+  function hideNotif() {
     if (mpNotif.classList.contains('gone')) return;
     mpNotif.classList.add('out');
     mpNotif.addEventListener('animationend', () => {
       mpNotif.classList.add('gone');
     }, { once: true });
-  }
-
-  function showNotif() {
-    mpNotif.classList.remove('gone', 'out');
-  }
-
-  /* En mobile el × solo oculta; en desktop descarta para siempre */
-  mpNotifClose.addEventListener('click', () => {
-    if (isMobile()) {
-      mpNotif.classList.add('gone');
-    } else {
-      dismissNotif();
-    }
-  });
-
-  /* ---- Botón principal ---- */
-  mpBtn.addEventListener('click', () => {
-    if (isMobile()) {
-      // Mobile: alterna la notificación combinada (sin panel)
-      if (mpNotif.classList.contains('gone')) {
-        showNotif();
-        mpBtn.classList.add('active');
-      } else {
-        mpNotif.classList.add('gone');
-        mpBtn.classList.remove('active');
-      }
-      return;
-    }
-    // Desktop: comportamiento original
-    dismissNotif();
-    mpPanel.classList.toggle('hidden');
-    mpBtn.classList.toggle('active', !mpPanel.classList.contains('hidden'));
-  });
-
-  mpClose.addEventListener('click', () => {
-    mpPanel.classList.add('hidden');
     mpBtn.classList.remove('active');
+  }
+
+  mpNotifClose.addEventListener('click', hideNotif);
+
+  /* ---- Botón principal: alterna la notificación ---- */
+  mpBtn.addEventListener('click', () => {
+    mpNotif.classList.contains('gone') ? showNotif() : hideNotif();
   });
 
   /* ---- Play / Pause ---- */
-  mpPlay.addEventListener('click', () => {
-    audio.paused ? audio.play() : audio.pause();
-  });
-
   mpNotifPlay.addEventListener('click', () => {
     audio.paused ? audio.play() : audio.pause();
   });
 
   /* ---- Sincronizar barras e íconos ---- */
   function setPlaying(state) {
-    mpIconPlay.style.display       = state ? 'none'   : 'inline';
-    mpIconPause.style.display      = state ? 'inline' : 'none';
     mpNotifIconPlay.style.display  = state ? 'none'   : 'inline';
     mpNotifIconPause.style.display = state ? 'inline' : 'none';
-    mpBars.classList.toggle('playing', state);
     mpNotifBars.classList.toggle('playing', state);
   }
 
   audio.addEventListener('play',  () => setPlaying(true));
   audio.addEventListener('pause', () => setPlaying(false));
 
-  /* ---- Volumen ---- */
-  mpVolume.addEventListener('input', () => {
-    audio.volume = parseInt(mpVolume.value, 10) / 100;
-  });
-
-  /* ---- Autoplay ----
-     El elemento <audio> tiene autoplay+muted en el HTML, lo que todos
-     los navegadores permiten. En cuanto empieza a reproducirse,
-     desmutamos para que se escuche. Si por alguna razón no arrancó
-     (bloqueo en file://), esperamos el primer gesto del usuario. */
-  audio.volume = parseInt(mpVolume.value, 10) / 100;
-
-  /* ---- Autoplay por gesto ----
-     Los browsers bloquean el audio sin interacción del usuario.
-     Esperamos el primer gesto (scroll, click, toque, movimiento)
-     y arrancamos el audio con volumen completo. */
-  audio.volume = parseInt(mpVolume.value, 10) / 100;
-
-  // pointerdown: dispara al presionar el mouse (antes del click) → más rápido en desktop
-  // touchstart: primer toque en mobile
-  // keydown: teclado
+  /* ---- Autoplay por gesto ---- */
   const gestureEvents = ['pointerdown', 'touchstart', 'keydown'];
 
   function startAudio() {
     audio.play()
-      .then(() => {
-        gestureEvents.forEach(ev => document.removeEventListener(ev, startAudio));
-      })
+      .then(() => gestureEvents.forEach(ev => document.removeEventListener(ev, startAudio)))
       .catch(() => {});
   }
 

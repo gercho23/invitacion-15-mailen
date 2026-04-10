@@ -552,39 +552,6 @@
       <button class="mp__notif-close" id="mpNotifClose" aria-label="Cerrar">×</button>
     </div>
 
-    <!-- Panel de controles (aparece al tocar el botón) -->
-    <div class="mp__panel hidden" id="mpPanel">
-      <div class="mp__head">
-        <div class="mp__bars" id="mpBars">
-          <span></span><span></span><span></span><span></span>
-        </div>
-        <div class="mp__meta">
-          <span class="mp__title">Photograph</span>
-          <span class="mp__artist">Ed Sheeran</span>
-        </div>
-        <button class="mp__close" id="mpClose" aria-label="Cerrar">×</button>
-      </div>
-      <div class="mp__ctrl">
-        <button class="mp__play-btn" id="mpPlay" aria-label="Reproducir">
-          <svg id="mpIconPlay" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-            <polygon points="5 3 19 12 5 21 5 3"/>
-          </svg>
-          <svg id="mpIconPause" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display:none">
-            <rect x="6" y="4" width="4" height="16"/>
-            <rect x="14" y="4" width="4" height="16"/>
-          </svg>
-        </button>
-        <div class="mp__volume">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-            <path d="M15.54 8.46a5 5 0 010 7.07"/>
-            <path d="M19.07 4.93a10 10 0 010 14.14"/>
-          </svg>
-          <input type="range" id="mpVolume" min="0" max="100" value="60" class="mp__slider" aria-label="Volumen">
-        </div>
-      </div>
-    </div>
-
     <!-- Audio -->
     <audio id="mpAudio" loop preload="auto">
       <source src="Ed Sheeran - Photograph (Official Lyric Video).mp3" type="audio/mpeg">

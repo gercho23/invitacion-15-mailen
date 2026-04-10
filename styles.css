@@ -1346,23 +1346,6 @@ button {
   box-shadow: 0 0 28px rgba(192, 192, 192, 0.12);
 }
 
-.mp__panel {
-  width: 272px;
-  background: rgba(11, 11, 11, 0.97);
-  border: 1px solid rgba(192, 192, 192, 0.18);
-  backdrop-filter: blur(20px);
-  padding: 18px 20px 20px;
-  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.75);
-  transform-origin: top right;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.mp__panel.hidden {
-  opacity: 0;
-  transform: scale(0.93) translateY(-8px);
-  pointer-events: none;
-}
-
 /* ---- Notificación ---- */
 .mp__notif {
   width: 248px;
@@ -1443,9 +1426,10 @@ button {
   margin-top: 2px;
 }
 
-/* Botón play en notificación — solo visible en mobile */
+/* Botón play en notificación */
 .mp__notif-play {
-  display: none;
+  display: flex;
+  align-items: center;
   background: none;
   border: none;
   color: var(--silver-light);
@@ -1469,147 +1453,9 @@ button {
 }
 .mp__notif-close:hover { color: var(--white); }
 
-/* Cabecera: barras + info + cerrar */
-.mp__head {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 16px;
-}
-
-.mp__bars {
-  display: flex;
-  align-items: flex-end;
-  gap: 3px;
-  height: 18px;
-  flex-shrink: 0;
-}
-
-.mp__bars span {
-  display: block;
-  width: 3px;
-  height: 5px;
-  background: var(--silver-dark);
-  border-radius: 2px;
-}
-
-.mp__bars.playing span { background: var(--silver); }
-.mp__bars.playing span:nth-child(1) { animation: mpBar 0.85s ease-in-out infinite; }
-.mp__bars.playing span:nth-child(2) { animation: mpBar 0.85s ease-in-out 0.18s infinite; }
-.mp__bars.playing span:nth-child(3) { animation: mpBar 0.85s ease-in-out 0.06s infinite; }
-.mp__bars.playing span:nth-child(4) { animation: mpBar 0.85s ease-in-out 0.28s infinite; }
-
 @keyframes mpBar {
   0%, 100% { height: 4px; }
   50%       { height: 16px; }
-}
-
-.mp__meta {
-  flex: 1;
-  overflow: hidden;
-}
-
-.mp__title {
-  display: block;
-  font-family: var(--font-sans);
-  font-size: 0.8rem;
-  font-weight: 400;
-  color: var(--white);
-  letter-spacing: 0.05em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.mp__artist {
-  display: block;
-  font-family: var(--font-sans);
-  font-size: 0.68rem;
-  font-weight: 300;
-  color: var(--silver-dark);
-  letter-spacing: 0.04em;
-  margin-top: 3px;
-}
-
-.mp__close {
-  background: none;
-  border: none;
-  color: var(--silver-dark);
-  font-size: 1.4rem;
-  line-height: 1;
-  padding: 0;
-  cursor: pointer;
-  transition: color 0.2s;
-  flex-shrink: 0;
-}
-.mp__close:hover { color: var(--white); }
-
-/* Controles: play + volumen */
-.mp__ctrl {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.mp__play-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: rgba(192, 192, 192, 0.08);
-  border: 1px solid rgba(192, 192, 192, 0.28);
-  color: var(--white);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.25s;
-  flex-shrink: 0;
-}
-
-.mp__play-btn:hover {
-  background: rgba(192, 192, 192, 0.18);
-  border-color: rgba(192, 192, 192, 0.6);
-}
-
-.mp__volume {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--silver-dark);
-}
-
-.mp__slider {
-  flex: 1;
-  -webkit-appearance: none;
-  height: 2px;
-  background: rgba(192, 192, 192, 0.2);
-  border-radius: 2px;
-  outline: none;
-  cursor: pointer;
-}
-
-.mp__slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--silver);
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.mp__slider::-webkit-slider-thumb:hover {
-  transform: scale(1.35);
-}
-
-.mp__slider::-moz-range-thumb {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--silver);
-  border: none;
-  cursor: pointer;
 }
 
 /* YouTube iframe oculto */
@@ -1873,9 +1719,7 @@ footer.reveal.visible,
   /* Reproductor de música */
   .mp              { top: 16px; right: 16px; }
   .mp__btn         { width: 44px; height: 44px; }
-  .mp__panel       { display: none !important; }
   .mp__notif       { width: calc(100vw - 80px); max-width: 280px; }
-  .mp__notif-play  { display: flex; align-items: center; }
 }
 
 /* =============================================
@@ -1896,6 +1740,5 @@ footer.reveal.visible,
   .location-card     { padding: 32px 18px; }
   .map-iframe        { height: 200px; }
 
-  .mp__panel  { width: calc(100vw - 64px); }
   .mp__notif  { width: calc(100vw - 64px); }
 }
