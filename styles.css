@@ -629,7 +629,7 @@ button {
 @media (min-width: 641px) {
   .carousel-wrap {
     max-width: 100%;
-    padding: 0 54px; /* espacio para los botones fuera del carousel */
+    padding: 0 80px; /* espacio para los botones fuera del carousel */
   }
   .carousel {
     max-width: 100%;
@@ -644,9 +644,9 @@ button {
     flex: 0 0 calc((100% - 28px) / 3);
     aspect-ratio: 4 / 5;
   }
-  /* Botones afuera del carousel, en la zona de padding del wrap */
-  .carousel__btn--prev { left: 4px; }
-  .carousel__btn--next { right: 4px; }
+  /* Botones centrados en la zona de padding del wrap */
+  .carousel__btn--prev { left: 16px; }
+  .carousel__btn--next { right: 16px; }
 }
 
 /* =============================================
