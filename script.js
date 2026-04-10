@@ -1,4 +1,18 @@
 /* =============================================
+   FIXES MÓVIL
+   ============================================= */
+// Fuerza scroll al tope al cargar (evita que el browser restaure posición anterior)
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+window.scrollTo(0, 0);
+
+// Variable --vh real para iOS Safari (evita que la barra del browser corte el hero)
+function setVh() {
+  document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+}
+setVh();
+window.addEventListener('resize', setVh);
+
+/* =============================================
    PARTÍCULAS + DIAMANTES CAYENDO
    ============================================= */
 (function () {
