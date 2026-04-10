@@ -203,11 +203,13 @@ setInterval(updateCountdown, 1000);
    CARRUSEL DE GALERÍA
    ============================================= */
 (function () {
-  const carousel   = document.getElementById('galleryCarousel');
-  const slides     = Array.from(carousel.querySelectorAll('.carousel__slide'));
-  const dotsWrap   = document.getElementById('carouselDots');
-  const prevBtn    = document.getElementById('carouselPrev');
-  const nextBtn    = document.getElementById('carouselNext');
+  const carousel  = document.getElementById('galleryCarousel');
+  const track     = carousel.querySelector('.carousel__slides');
+  const slides    = Array.from(carousel.querySelectorAll('.carousel__slide'));
+  const dotsWrap  = document.getElementById('carouselDots');
+  const prevBtn   = document.getElementById('carouselPrev');
+  const nextBtn   = document.getElementById('carouselNext');
+  const GAP_DESK  = 14; // debe coincidir con el gap del CSS desktop
   let current = 0, timer;
 
   // Crear puntos
@@ -220,15 +222,29 @@ setInterval(updateCountdown, 1000);
   });
   const dots = Array.from(dotsWrap.children);
 
-  function goTo(idx) {
-    slides[current].classList.remove('active');
-    dots[current].classList.remove('active');
-    current = (idx + slides.length) % slides.length;
-    slides[current].classList.add('active');
-    dots[current].classList.add('active');
+  function isDesktop() { return window.innerWidth > 640; }
+  function getVisible() { return isDesktop() ? 3 : 1; }
+  function getMax()     { return Math.max(0, slides.length - getVisible()); }
+
+  function updateTrack(animated = true) {
+    if (!animated) track.style.transition = 'none';
+    const slideW = slides[0].offsetWidth;
+    const gap    = isDesktop() ? GAP_DESK : 0;
+    track.style.transform = `translateX(-${current * (slideW + gap)}px)`;
+    if (!animated) { track.offsetHeight; track.style.transition = ''; } // force reflow
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
   }
 
-  function resetAuto() { clearInterval(timer); timer = setInterval(() => goTo(current + 1), 4500); }
+  function goTo(idx) {
+    const max = getMax();
+    current   = ((idx % (max + 1)) + (max + 1)) % (max + 1);
+    updateTrack();
+  }
+
+  function resetAuto() {
+    clearInterval(timer);
+    timer = setInterval(() => goTo(current + 1), 4500);
+  }
 
   prevBtn.addEventListener('click', (e) => { e.stopPropagation(); goTo(current - 1); resetAuto(); });
   nextBtn.addEventListener('click', (e) => { e.stopPropagation(); goTo(current + 1); resetAuto(); });
@@ -236,7 +252,7 @@ setInterval(updateCountdown, 1000);
   carousel.addEventListener('mouseenter', () => clearInterval(timer));
   carousel.addEventListener('mouseleave', resetAuto);
 
-  // Swipe en mobile
+  // Swipe
   let tx = 0;
   carousel.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
   carousel.addEventListener('touchend', e => {
@@ -244,7 +260,7 @@ setInterval(updateCountdown, 1000);
     if (Math.abs(diff) > 50) { goTo(current + (diff > 0 ? 1 : -1)); resetAuto(); }
   });
 
-  // Click abre lightbox
+  // Click → lightbox
   slides.forEach(slide => {
     slide.addEventListener('click', () => {
       lightboxImg.src = slide.dataset.src;
@@ -253,6 +269,13 @@ setInterval(updateCountdown, 1000);
     });
   });
 
+  // Recalcular en resize
+  window.addEventListener('resize', () => {
+    current = Math.min(current, getMax());
+    updateTrack(false);
+  });
+
+  updateTrack(false);
   resetAuto();
 }());
 
