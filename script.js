@@ -494,11 +494,14 @@ sections.forEach(s => sectionObserver.observe(s));
    BOTÓN VOLVER ARRIBA
    ============================================= */
 (function () {
-  const btn = document.getElementById('backTop');
+  const btn  = document.getElementById('backTop');
+  const hero = document.getElementById('hero');
 
-  window.addEventListener('scroll', () => {
-    btn.classList.toggle('visible', window.scrollY > 400);
-  }, { passive: true });
+  // Muestra el botón cuando el hero sale del viewport
+  new IntersectionObserver(
+    ([entry]) => btn.classList.toggle('visible', !entry.isIntersecting),
+    { threshold: 0 }
+  ).observe(hero);
 
   btn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
