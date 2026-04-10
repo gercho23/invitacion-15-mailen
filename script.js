@@ -85,43 +85,6 @@ window.addEventListener('orientationchange', () => setTimeout(setVh, 150));
   window.addEventListener('resize', () => { resize(); init(); });
 })();
 
-/* =============================================
-   CURSOR PERSONALIZADO (solo desktop con mouse)
-   ============================================= */
-(function () {
-  // No aplica en dispositivos touch
-  if (window.matchMedia('(hover: none)').matches) return;
-
-  const glow   = document.getElementById('cursorGlow');
-  const CHARS  = ['✦', '✧', '⋆', '✫', '·'];
-  let lastSpark = 0;
-  let moving    = false;
-  let moveTimer;
-
-  document.addEventListener('mousemove', (e) => {
-    // Mover el destello del cursor
-    glow.style.left = e.clientX + 'px';
-    glow.style.top  = e.clientY + 'px';
-    if (!glow.classList.contains('visible')) glow.classList.add('visible');
-
-    // Rastro de chispas al mover
-    const now = Date.now();
-    if (now - lastSpark < 55) return;
-    lastSpark = now;
-
-    const el = document.createElement('span');
-    el.className   = 'cursor-spark';
-    el.textContent = CHARS[Math.floor(Math.random() * CHARS.length)];
-    el.style.left  = e.clientX + 'px';
-    el.style.top   = e.clientY + 'px';
-    el.style.setProperty('--dx', (Math.random() - 0.5) * 32 + 'px');
-    document.body.appendChild(el);
-    el.addEventListener('animationend', () => el.remove());
-  });
-
-  // Ocultar cuando el cursor sale de la ventana
-  document.addEventListener('mouseleave', () => glow.classList.remove('visible'));
-})();
 
 /* =============================================
    CONFETTI PLATEADO (se dispara en el RSVP)
