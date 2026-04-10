@@ -200,10 +200,85 @@ updateCountdown();
 setInterval(updateCountdown, 1000);
 
 /* =============================================
+   CARRUSEL DE GALERÍA
+   ============================================= */
+(function () {
+  const carousel   = document.getElementById('galleryCarousel');
+  const slides     = Array.from(carousel.querySelectorAll('.carousel__slide'));
+  const dotsWrap   = document.getElementById('carouselDots');
+  const prevBtn    = document.getElementById('carouselPrev');
+  const nextBtn    = document.getElementById('carouselNext');
+  let current = 0, timer;
+
+  // Crear puntos
+  slides.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'carousel__dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('aria-label', `Foto ${i + 1}`);
+    d.addEventListener('click', () => { goTo(i); resetAuto(); });
+    dotsWrap.appendChild(d);
+  });
+  const dots = Array.from(dotsWrap.children);
+
+  function goTo(idx) {
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = (idx + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+  }
+
+  function resetAuto() { clearInterval(timer); timer = setInterval(() => goTo(current + 1), 4500); }
+
+  prevBtn.addEventListener('click', (e) => { e.stopPropagation(); goTo(current - 1); resetAuto(); });
+  nextBtn.addEventListener('click', (e) => { e.stopPropagation(); goTo(current + 1); resetAuto(); });
+
+  carousel.addEventListener('mouseenter', () => clearInterval(timer));
+  carousel.addEventListener('mouseleave', resetAuto);
+
+  // Swipe en mobile
+  let tx = 0;
+  carousel.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+  carousel.addEventListener('touchend', e => {
+    const diff = tx - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) { goTo(current + (diff > 0 ? 1 : -1)); resetAuto(); }
+  });
+
+  // Click abre lightbox
+  slides.forEach(slide => {
+    slide.addEventListener('click', () => {
+      lightboxImg.src = slide.dataset.src;
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  resetAuto();
+}());
+
+/* =============================================
+   PARALLAX — SECCIÓN UBICACIÓN
+   ============================================= */
+(function () {
+  const bg      = document.getElementById('ubicacionBg');
+  const section = document.getElementById('ubicacion');
+
+  function update() {
+    if (window.innerWidth <= 640) return;
+    const rect     = section.getBoundingClientRect();
+    const progress = rect.top / window.innerHeight; // 1 = arriba del viewport, -1 = abajo
+    bg.style.transform = `translateY(${progress * 60}px)`;
+  }
+
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+}());
+
+/* =============================================
    PROTECCIÓN DE IMÁGENES
    ============================================= */
 document.addEventListener('contextmenu', (e) => {
-  if (e.target.closest('.gallery, .lightbox')) {
+  if (e.target.closest('.carousel, .lightbox')) {
     e.preventDefault();
   }
 });
@@ -215,14 +290,7 @@ const lightbox     = document.getElementById('lightbox');
 const lightboxImg  = document.getElementById('lightboxImg');
 const lightboxClose = document.getElementById('lightboxClose');
 
-document.querySelectorAll('.gallery__item').forEach(item => {
-  item.addEventListener('click', () => {
-    const src = item.getAttribute('data-src');
-    lightboxImg.src = src;
-    lightbox.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  });
-});
+// El lightbox ahora lo abre el carrusel directamente (ver arriba)
 
 function closeLightbox() {
   lightbox.classList.remove('open');

@@ -188,31 +188,32 @@
         </div>
       </div>
 
-      <div class="gallery">
-        <div class="gallery__item reveal" data-src="book/BOSQUE_1.jpg">
-          <img src="book/BOSQUE_1.jpg" alt="Mailen" loading="lazy">
-          <div class="gallery__overlay">
-            <span class="gallery__zoom">&#43;</span>
+      <div class="carousel reveal" id="galleryCarousel">
+        <div class="carousel__slides">
+          <div class="carousel__slide active" data-src="book/BOSQUE_1.jpg">
+            <img src="book/BOSQUE_1.jpg" alt="Mailen" loading="lazy">
+            <div class="carousel__shield"></div>
+            <div class="carousel__hint">&#43;</div>
+          </div>
+          <div class="carousel__slide" data-src="book/PLAYA_3.jpg">
+            <img src="book/PLAYA_3.jpg" alt="Mailen" loading="lazy">
+            <div class="carousel__shield"></div>
+            <div class="carousel__hint">&#43;</div>
+          </div>
+          <div class="carousel__slide" data-src="book/PLAYA_1.jpg">
+            <img src="book/PLAYA_1.jpg" alt="Mailen" loading="lazy">
+            <div class="carousel__shield"></div>
+            <div class="carousel__hint">&#43;</div>
+          </div>
+          <div class="carousel__slide" data-src="book/4.jpg">
+            <img src="book/4.jpg" alt="Mailen" loading="lazy">
+            <div class="carousel__shield"></div>
+            <div class="carousel__hint">&#43;</div>
           </div>
         </div>
-        <div class="gallery__item gallery__item--tall reveal" data-src="book/PLAYA_3.jpg">
-          <img src="book/PLAYA_3.jpg" alt="Mailen" loading="lazy">
-          <div class="gallery__overlay">
-            <span class="gallery__zoom">&#43;</span>
-          </div>
-        </div>
-        <div class="gallery__item reveal" data-src="book/PLAYA_1.jpg">
-          <img src="book/PLAYA_1.jpg" alt="Mailen" loading="lazy">
-          <div class="gallery__overlay">
-            <span class="gallery__zoom">&#43;</span>
-          </div>
-        </div>
-        <div class="gallery__item reveal" data-src="book/4.jpg">
-          <img src="book/4.jpg" alt="Mailen" loading="lazy">
-          <div class="gallery__overlay">
-            <span class="gallery__zoom">&#43;</span>
-          </div>
-        </div>
+        <button class="carousel__btn carousel__btn--prev" id="carouselPrev" aria-label="Anterior">&#8249;</button>
+        <button class="carousel__btn carousel__btn--next" id="carouselNext" aria-label="Siguiente">&#8250;</button>
+        <div class="carousel__dots" id="carouselDots"></div>
       </div>
     </div>
   </section>
@@ -331,6 +332,7 @@
        UBICACIÓN
   ============================= -->
   <section id="ubicacion" class="section section--dark reveal">
+    <div class="parallax-bg" id="ubicacionBg"></div>
     <div class="container">
       <div class="section-header reveal">
         <h2 class="section-title">Ubicación</h2>
