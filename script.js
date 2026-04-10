@@ -325,7 +325,7 @@ document.getElementById('downloadIcs').addEventListener('click', () => {
    Requiere cuenta en https://formspree.io
    Los datos se envían a Google Sheets via Apps Script.
    ============================================= */
-const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxIjeK-nMKnbCzoVjMXQ_u0IMHllLtod-C_XdlXWlC4KBDyRjeI46nQorm9Uue7Zjs/exec';
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbzqMp_ThgD9SJ4KRGZpquphx4zw7OcwpEh-iHs30d9yJRYbCQpT2R-RDH2DoEIkQg/exec';
 
 const rsvpForm    = document.getElementById('rsvpForm');
 const rsvpSuccess = document.getElementById('rsvpSuccess');
