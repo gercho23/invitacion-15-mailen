@@ -505,7 +505,8 @@ button {
 .carousel {
   position: relative;
   overflow: hidden;
-  height: 520px;
+  aspect-ratio: 4 / 5;
+  max-height: 80vh;
   user-select: none;
 }
 
@@ -1803,7 +1804,6 @@ footer.reveal.visible,
   .detail-card__main { font-size: 1.2rem; }
 
   /* Carrusel */
-  .carousel { height: 380px; }
   .carousel__btn { width: 38px; height: 38px; font-size: 1.5rem; }
 
   /* Parallax — desactivar en mobile (iOS no lo soporta bien) */
