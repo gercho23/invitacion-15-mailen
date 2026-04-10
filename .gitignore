@@ -1,2 +1,4 @@
 .DS_Store
 .claude/
+# PNGs originales sin comprimir (usar los JPG de book/)
+book/*.png
