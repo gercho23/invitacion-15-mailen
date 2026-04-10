@@ -446,6 +446,47 @@
   </section>
 
   <!-- ============================
+       REGALOS
+  ============================= -->
+  <section class="section section--dark gifts reveal">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">con cariño</span>
+        <h2 class="section-title">Regalos</h2>
+        <div class="ornament">
+          <span class="ornament__line"></span>
+          <span class="ornament__gem">◆</span>
+          <span class="ornament__line"></span>
+        </div>
+        <p class="section-sub">Tu presencia es el mejor regalo. Si de todas formas querés tener un gesto, con mucho amor te dejo mis datos.</p>
+      </div>
+      <div style="text-align:center; margin-top: 8px;">
+        <button class="btn btn--silver" id="giftsBtn">Ver datos para transferencia</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal datos bancarios -->
+  <div class="gifts-modal" id="giftsModal" role="dialog" aria-modal="true" aria-label="Datos bancarios">
+    <div class="gifts-modal__box">
+      <button class="gifts-modal__close" id="giftsClose" aria-label="Cerrar">&times;</button>
+      <div class="ornament" style="margin-bottom: 24px;">
+        <span class="ornament__line"></span>
+        <span class="ornament__gem">◆</span>
+        <span class="ornament__line"></span>
+      </div>
+      <h3 class="gifts-modal__title">Datos bancarios</h3>
+      <ul class="gifts-modal__list">
+        <li><span class="gifts-modal__label">Titular</span><span class="gifts-modal__value">Mailen Carmisciano</span></li>
+        <li><span class="gifts-modal__label">Banco</span><span class="gifts-modal__value">Banco Ejemplo</span></li>
+        <li><span class="gifts-modal__label">CBU</span><span class="gifts-modal__value" id="giftsCbu">0000000000000000000000</span></li>
+        <li><span class="gifts-modal__label">Alias</span><span class="gifts-modal__value" id="giftsAlias">mailen.regalo</span></li>
+      </ul>
+      <button class="gifts-modal__copy" id="giftsCopyAlias">Copiar alias</button>
+    </div>
+  </div>
+
+  <!-- ============================
        FOOTER
   ============================= -->
   <footer class="footer">

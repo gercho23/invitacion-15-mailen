@@ -494,6 +494,41 @@ sections.forEach(s => sectionObserver.observe(s));
 }());
 
 /* =============================================
+   MODAL REGALOS
+   ============================================= */
+(function () {
+  const modal     = document.getElementById('giftsModal');
+  const openBtn   = document.getElementById('giftsBtn');
+  const closeBtn  = document.getElementById('giftsClose');
+  const copyBtn   = document.getElementById('giftsCopyAlias');
+  const aliasEl   = document.getElementById('giftsAlias');
+
+  function openModal()  { modal.classList.add('open');  document.body.style.overflow = 'hidden'; }
+  function closeModal() { modal.classList.remove('open'); document.body.style.overflow = ''; }
+
+  openBtn.addEventListener('click', openModal);
+  closeBtn.addEventListener('click', closeModal);
+
+  // Cerrar al tocar el fondo
+  modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+  // Cerrar con Escape
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+  // Copiar alias
+  copyBtn.addEventListener('click', () => {
+    navigator.clipboard.writeText(aliasEl.textContent).then(() => {
+      copyBtn.textContent = '¡Copiado!';
+      copyBtn.classList.add('copied');
+      setTimeout(() => {
+        copyBtn.textContent = 'Copiar alias';
+        copyBtn.classList.remove('copied');
+      }, 2000);
+    });
+  });
+}());
+
+/* =============================================
    BOTÓN VOLVER ARRIBA
    ============================================= */
 (function () {

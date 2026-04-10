@@ -1044,6 +1044,129 @@ button {
 
 
 /* =============================================
+   MODAL REGALOS
+   ============================================= */
+.gifts-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.gifts-modal.open {
+  display: flex;
+}
+.gifts-modal::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.55);
+}
+.gifts-modal__box {
+  position: relative;
+  z-index: 1;
+  background: rgba(14, 14, 14, 0.96);
+  border: 1px solid rgba(192, 192, 192, 0.2);
+  padding: 48px 40px 40px;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  animation: modalIn 0.3s ease;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(16px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.gifts-modal__close {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  background: none;
+  border: none;
+  color: var(--silver-dark);
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.2s;
+}
+.gifts-modal__close:hover { color: var(--white); }
+
+.gifts-modal__title {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  color: var(--white);
+  margin-bottom: 28px;
+}
+.gifts-modal__list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.gifts-modal__list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  border-bottom: 1px solid rgba(192, 192, 192, 0.1);
+  padding-bottom: 14px;
+}
+.gifts-modal__list li:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.gifts-modal__label {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 300;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--silver-dark);
+  flex-shrink: 0;
+}
+.gifts-modal__value {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: var(--silver-light);
+  text-align: right;
+  word-break: break-all;
+}
+.gifts-modal__copy {
+  background: none;
+  border: 1px solid rgba(192, 192, 192, 0.3);
+  color: var(--silver-mid);
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 300;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 10px 24px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+.gifts-modal__copy:hover {
+  border-color: rgba(192, 192, 192, 0.6);
+  color: var(--white);
+}
+.gifts-modal__copy.copied {
+  color: #aaa;
+  border-color: rgba(192, 192, 192, 0.15);
+}
+
+@media (max-width: 640px) {
+  .gifts-modal__box { padding: 40px 24px 32px; }
+}
+
+/* =============================================
    BOTÓN VOLVER ARRIBA
    ============================================= */
 .back-top {
