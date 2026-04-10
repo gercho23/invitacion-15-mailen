@@ -504,13 +504,17 @@ button {
    ============================================= */
 
 /* ---- Mobile: 1 foto centrada, formato 4:5 ---- */
+.carousel-wrap {
+  position: relative;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
 .carousel {
   position: relative;
   overflow: hidden;
   width: 100%;
-  max-width: 480px;
   aspect-ratio: 4 / 5;
-  margin: 0 auto;
   user-select: none;
 }
 
@@ -623,6 +627,10 @@ button {
 
 /* ---- Desktop: 3 fotos side by side ---- */
 @media (min-width: 641px) {
+  .carousel-wrap {
+    max-width: 100%;
+    padding: 0 54px; /* espacio para los botones fuera del carousel */
+  }
   .carousel {
     max-width: 100%;
     aspect-ratio: unset;
@@ -636,8 +644,9 @@ button {
     flex: 0 0 calc((100% - 28px) / 3);
     aspect-ratio: 4 / 5;
   }
-  .carousel__btn--prev { left: -22px; }
-  .carousel__btn--next { right: -22px; }
+  /* Botones afuera del carousel, en la zona de padding del wrap */
+  .carousel__btn--prev { left: 4px; }
+  .carousel__btn--next { right: 4px; }
 }
 
 /* =============================================
