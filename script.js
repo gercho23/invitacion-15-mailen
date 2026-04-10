@@ -15,121 +15,112 @@ setVh();
 window.addEventListener('orientationchange', () => setTimeout(setVh, 150));
 
 /* =============================================
-   PARTÍCULAS + DIAMANTES CAYENDO
+   PARTÍCULAS — ESTRELLAS FLOTANDO EN EL HERO
    ============================================= */
 (function () {
   const canvas = document.getElementById('particles');
   const ctx    = canvas.getContext('2d');
-  let stars = [], diamonds = [];
+  const hero   = document.getElementById('hero');
+  let particles = [];
 
   function resize() {
-    canvas.width  = window.innerWidth;
-    canvas.height = window.innerHeight;
+    canvas.width  = hero.offsetWidth;
+    canvas.height = hero.offsetHeight;
   }
 
-  function initStars() {
-    stars = [];
-    for (let i = 0; i < 110; i++) {
-      stars.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        r: Math.random() * 1.1 + 0.2,
-        alpha: Math.random(),
-        speed: Math.random() * 0.004 + 0.001,
-        dir: Math.random() > 0.5 ? 1 : -1,
-      });
-    }
-  }
-
-  function initDiamonds() {
-    diamonds = [];
-    for (let i = 0; i < 28; i++) {
-      diamonds.push(makeDiamond(true));
-    }
-  }
-
-  function makeDiamond(randomY = false) {
+  function makeParticle(randomY = false) {
     return {
-      x:        Math.random() * canvas.width,
-      y:        randomY ? Math.random() * canvas.height : -16,
-      size:     Math.random() * 4 + 1.5,
-      vy:       Math.random() * 0.45 + 0.15,
-      vx:       (Math.random() - 0.5) * 0.25,
-      rot:      Math.random() * Math.PI * 2,
-      rotSpeed: (Math.random() - 0.5) * 0.018,
-      alpha:    Math.random() * 0.5 + 0.15,
+      x:          Math.random() * canvas.width,
+      y:          randomY ? Math.random() * canvas.height : canvas.height + 12,
+      size:       Math.random() * 2.8 + 0.6,
+      vy:         -(Math.random() * 0.35 + 0.08),
+      vx:         (Math.random() - 0.5) * 0.12,
+      alpha:      Math.random() * 0.4 + 0.05,
+      alphaSpeed: Math.random() * 0.004 + 0.001,
+      alphaDir:   Math.random() > 0.5 ? 1 : -1,
     };
   }
 
-  function drawDiamond(ctx, d) {
+  // Estrella de 4 puntas (sparkle ✦)
+  function drawStar(x, y, size, alpha) {
     ctx.save();
-    ctx.translate(d.x, d.y);
-    ctx.rotate(d.rot);
-    ctx.globalAlpha = d.alpha * 0.85;
-    ctx.fillStyle   = '#d4d4d4';
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle   = '#d8d8d8';
+    ctx.shadowColor = 'rgba(220,220,220,0.9)';
+    ctx.shadowBlur  = size * 4;
     ctx.beginPath();
-    ctx.moveTo(0, -d.size);
-    ctx.lineTo(d.size * 0.6, 0);
-    ctx.lineTo(0,  d.size);
-    ctx.lineTo(-d.size * 0.6, 0);
+    for (let i = 0; i < 8; i++) {
+      const angle = (i * Math.PI) / 4;
+      const r     = i % 2 === 0 ? size : size * 0.28;
+      if (i === 0) ctx.moveTo(x + Math.cos(angle) * r, y + Math.sin(angle) * r);
+      else         ctx.lineTo(x + Math.cos(angle) * r, y + Math.sin(angle) * r);
+    }
     ctx.closePath();
     ctx.fill();
     ctx.restore();
   }
 
+  function init() {
+    particles = [];
+    const count = Math.min(80, Math.floor((canvas.width * canvas.height) / 9000));
+    for (let i = 0; i < count; i++) particles.push(makeParticle(true));
+  }
+
   function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Estrellas parpadeantes
-    stars.forEach(s => {
-      s.alpha += s.speed * s.dir;
-      if (s.alpha >= 1 || s.alpha <= 0) s.dir *= -1;
-      ctx.beginPath();
-      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(200,200,200,${s.alpha})`;
-      ctx.fill();
+    particles.forEach((p, i) => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.alpha += p.alphaSpeed * p.alphaDir;
+      if (p.alpha > 0.65 || p.alpha < 0.03) p.alphaDir *= -1;
+      if (p.y < -12) particles[i] = makeParticle(false);
+      drawStar(p.x, p.y, p.size, p.alpha);
     });
-
-    // Diamantes cayendo
-    diamonds.forEach((d, i) => {
-      d.x   += d.vx;
-      d.y   += d.vy;
-      d.rot += d.rotSpeed;
-      if (d.y > canvas.height + 20) diamonds[i] = makeDiamond(false);
-      drawDiamond(ctx, d);
-    });
-
     requestAnimationFrame(draw);
   }
 
   resize();
-  initStars();
-  initDiamonds();
+  init();
   draw();
-  window.addEventListener('resize', () => { resize(); initStars(); initDiamonds(); });
+  window.addEventListener('resize', () => { resize(); init(); });
 })();
 
 /* =============================================
-   RASTRO DE DESTELLOS EN EL CURSOR
+   CURSOR PERSONALIZADO (solo desktop con mouse)
    ============================================= */
 (function () {
-  const CHARS  = ['✦', '✧', '⋆', '◆', '✫'];
-  let lastTime = 0;
+  // No aplica en dispositivos touch
+  if (window.matchMedia('(hover: none)').matches) return;
+
+  const glow   = document.getElementById('cursorGlow');
+  const CHARS  = ['✦', '✧', '⋆', '✫', '·'];
+  let lastSpark = 0;
+  let moving    = false;
+  let moveTimer;
 
   document.addEventListener('mousemove', (e) => {
-    const now = Date.now();
-    if (now - lastTime < 45) return; // ~22 por segundo
-    lastTime = now;
+    // Mover el destello del cursor
+    glow.style.left = e.clientX + 'px';
+    glow.style.top  = e.clientY + 'px';
+    if (!glow.classList.contains('visible')) glow.classList.add('visible');
 
-    const el  = document.createElement('span');
+    // Rastro de chispas al mover
+    const now = Date.now();
+    if (now - lastSpark < 55) return;
+    lastSpark = now;
+
+    const el = document.createElement('span');
     el.className   = 'cursor-spark';
     el.textContent = CHARS[Math.floor(Math.random() * CHARS.length)];
     el.style.left  = e.clientX + 'px';
     el.style.top   = e.clientY + 'px';
-    el.style.setProperty('--dx', (Math.random() - 0.5) * 30 + 'px');
+    el.style.setProperty('--dx', (Math.random() - 0.5) * 32 + 'px');
     document.body.appendChild(el);
     el.addEventListener('animationend', () => el.remove());
   });
+
+  // Ocultar cuando el cursor sale de la ventana
+  document.addEventListener('mouseleave', () => glow.classList.remove('visible'));
 })();
 
 /* =============================================

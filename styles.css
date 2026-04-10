@@ -57,14 +57,13 @@ button {
 }
 
 /* =============================================
-   PARTÍCULAS CANVAS
+   PARTÍCULAS CANVAS (dentro del hero)
    ============================================= */
 .particles-canvas {
-  position: fixed;
+  position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: 1;
   pointer-events: none;
-  opacity: 0.45;
 }
 
 /* =============================================
@@ -1019,23 +1018,55 @@ button {
 }
 
 /* =============================================
-   EFECTOS — RASTRO DE CURSOR
+   EFECTOS — CURSOR PERSONALIZADO (solo desktop)
    ============================================= */
+.cursor-glow {
+  position: fixed;
+  width: 36px;
+  height: 36px;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.4s;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(192,192,192,0.22) 0%, transparent 70%);
+  box-shadow: 0 0 10px 2px rgba(192,192,192,0.18);
+}
+.cursor-glow::after {
+  content: '✦';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: rgba(220, 220, 220, 0.85);
+  text-shadow: 0 0 8px rgba(200,200,200,0.9);
+  line-height: 36px;
+  text-align: center;
+}
+.cursor-glow.visible { opacity: 1; }
+
 .cursor-spark {
   position: fixed;
   pointer-events: none;
   z-index: 9990;
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   color: var(--silver);
   transform: translate(-50%, -50%);
   user-select: none;
-  animation: cursorSpark 0.7s ease forwards;
-  text-shadow: 0 0 6px rgba(192, 192, 192, 0.8);
+  animation: cursorSpark 0.75s ease forwards;
+  text-shadow: 0 0 6px rgba(192, 192, 192, 0.9);
 }
 
 @keyframes cursorSpark {
-  0%   { opacity: 1;   transform: translate(calc(-50% + var(--dx, 0px)), -50%) scale(1); }
-  100% { opacity: 0;   transform: translate(calc(-50% + var(--dx, 0px)), calc(-50% - 28px)) scale(0.2); }
+  0%   { opacity: 0.9; transform: translate(calc(-50% + var(--dx, 0px)), -50%) scale(1.1); }
+  100% { opacity: 0;   transform: translate(calc(-50% + var(--dx, 0px)), calc(-50% - 32px)) scale(0.15); }
+}
+
+@media (hover: none) {
+  .cursor-glow { display: none; }
 }
 
 /* =============================================
