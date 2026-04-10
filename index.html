@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="XV de Mailen Carmisciano — 3 de Julio 2026">
+  <title>XV · Mailen Carmisciano</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Great+Vibes&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Partículas de fondo -->
+  <canvas id="particles" class="particles-canvas"></canvas>
+
+  <!-- Navegación lateral -->
+  <nav class="side-nav" aria-label="Navegación por secciones">
+    <a href="#hero"       class="nav-dot" data-label="Inicio"></a>
+    <a href="#countdown"  class="nav-dot" data-label="Cuenta Regresiva"></a>
+    <a href="#detalles"   class="nav-dot" data-label="Detalles"></a>
+    <a href="#galeria"    class="nav-dot" data-label="Galería"></a>
+    <a href="#calendario" class="nav-dot" data-label="Calendario"></a>
+    <a href="#ubicacion"  class="nav-dot" data-label="Ubicación"></a>
+    <a href="#rsvp"       class="nav-dot" data-label="Asistencia"></a>
+  </nav>
+
+  <!-- ============================
+       HERO
+  ============================= -->
+  <section id="hero" class="hero">
+    <div class="hero__bg">
+      <video
+        class="hero__img"
+        id="heroImg"
+        autoplay
+        loop
+        muted
+        playsinline
+      >
+        <source src="VIDEO-BUCLE-WEB-MAILEN-2.mp4" type="video/mp4">
+      </video>
+      <div class="hero__overlay"></div>
+    </div>
+
+    <div class="hero__content">
+      <p class="hero__pre animate-up delay-1">Te invito a celebrar</p>
+      <div class="hero__xv animate-up delay-2">Mis 15 años</div>
+      <h1 class="hero__name animate-up delay-3">Mailen</h1>
+      <div class="ornament animate-up delay-4">
+        <span class="ornament__line"></span>
+        <span class="ornament__gem">◆</span>
+        <span class="ornament__line"></span>
+      </div>
+      <p class="hero__date animate-up delay-5">3 de Julio de 2026</p>
+    </div>
+
+    <a href="#countdown" class="hero__scroll animate-fade delay-6" aria-label="Ir a la cuenta regresiva">
+      <span class="scroll-chevron"></span>
+    </a>
+  </section>
+
+  <!-- ============================
+       MENSAJE INTRODUCTORIO
+  ============================= -->
+  <section class="intro-msg">
+    <div class="intro-msg__inner">
+      <p class="intro-msg__text">Con mucha alegría te invito a celebrar mis 15 años, un momento único que sueño compartir con las personas que más quiero. Me encantaría que me acompañes en esta noche tan especial, llena de emoción, música y alegría.</p>
+    </div>
+  </section>
+
+  <!-- ============================
+       CUENTA REGRESIVA
+  ============================= -->
+  <section id="countdown" class="section section--dark">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">faltan</span>
+        <h2 class="section-title">Cuenta Regresiva</h2>
+        <div class="ornament">
+          <span class="ornament__line"></span>
+          <span class="ornament__gem">◆</span>
+          <span class="ornament__line"></span>
+        </div>
+      </div>
+
+      <div class="countdown reveal">
+        <div class="countdown__item">
+          <span class="countdown__num" id="cd-days">00</span>
+          <span class="countdown__label">días</span>
+        </div>
+        <span class="countdown__sep">:</span>
+        <div class="countdown__item">
+          <span class="countdown__num" id="cd-hours">00</span>
+          <span class="countdown__label">horas</span>
+        </div>
+        <span class="countdown__sep">:</span>
+        <div class="countdown__item">
+          <span class="countdown__num" id="cd-minutes">00</span>
+          <span class="countdown__label">minutos</span>
+        </div>
+        <span class="countdown__sep">:</span>
+        <div class="countdown__item">
+          <span class="countdown__num" id="cd-seconds">00</span>
+          <span class="countdown__label">segundos</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================
+       DETALLES
+  ============================= -->
+  <section id="detalles" class="section section--deeper">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">el evento</span>
+        <h2 class="section-title">Los Detalles</h2>
+        <div class="ornament">
+          <span class="ornament__line"></span>
+          <span class="ornament__gem">◆</span>
+          <span class="ornament__line"></span>
+        </div>
+      </div>
+
+      <div class="details-grid">
+        <div class="detail-card reveal">
+          <div class="detail-card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+          </div>
+          <h3 class="detail-card__label">Fecha</h3>
+          <p class="detail-card__main">Viernes 3 de Julio, 2026</p>
+        </div>
+
+        <div class="detail-card reveal">
+          <div class="detail-card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <h3 class="detail-card__label">Horario</h3>
+          <p class="detail-card__main">10:00 pm &nbsp;·&nbsp; 02:00 am</p>
+        </div>
+
+        <div class="detail-card reveal">
+          <div class="detail-card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z"/>
+            </svg>
+          </div>
+          <h3 class="detail-card__label">Vestimenta</h3>
+          <p class="detail-card__main">Elegante Sport</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================
+       GALERÍA
+  ============================= -->
+  <section id="galeria" class="section section--dark">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">momentos</span>
+        <h2 class="section-title">Galería</h2>
+        <div class="ornament">
+          <span class="ornament__line"></span>
+          <span class="ornament__gem">◆</span>
+          <span class="ornament__line"></span>
+        </div>
+      </div>
+
+      <div class="gallery">
+        <div class="gallery__item reveal" data-src="https://i.ibb.co/Nd4SDQ65/BOSQUE-1.png">
+          <img src="https://i.ibb.co/Nd4SDQ65/BOSQUE-1.png" alt="Mailen" loading="lazy">
+          <div class="gallery__overlay">
+            <span class="gallery__zoom">&#43;</span>
+          </div>
+        </div>
+        <div class="gallery__item gallery__item--tall reveal" data-src="https://i.ibb.co/zTnKW3jt/PLAYA-3.png">
+          <img src="https://i.ibb.co/zTnKW3jt/PLAYA-3.png" alt="Mailen" loading="lazy">
+          <div class="gallery__overlay">
+            <span class="gallery__zoom">&#43;</span>
+          </div>
+        </div>
+        <div class="gallery__item reveal" data-src="https://i.ibb.co/xSH3rQ45/PLAYA-1.png">
+          <img src="https://i.ibb.co/xSH3rQ45/PLAYA-1.png" alt="Mailen" loading="lazy">
+          <div class="gallery__overlay">
+            <span class="gallery__zoom">&#43;</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Foto ampliada">
+    <button class="lightbox__close" id="lightboxClose" aria-label="Cerrar">&times;</button>
+    <div class="lightbox__wrapper">
+      <img class="lightbox__img" id="lightboxImg" src="" alt="Mailen">
+      <div class="lightbox__shield"></div>
+    </div>
+  </div>
+
+  <!-- ============================
+       CALENDARIO
+  ============================= -->
+  <section id="calendario" class="section section--deeper">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">reservá la fecha</span>
+        <h2 class="section-title">Calendario</h2>
+        <div class="ornament">
+          <span class="ornament__line"></span>
+          <span class="ornament__gem">◆</span>
+          <span class="ornament__line"></span>
+        </div>
+      </div>
+
+      <div class="cal-wrapper reveal">
+        <div class="cal">
+          <div class="cal__header">Julio 2026</div>
+          <div class="cal__grid">
+            <!-- Encabezados días -->
+            <div class="cal__hdr">Dom</div>
+            <div class="cal__hdr">Lun</div>
+            <div class="cal__hdr">Mar</div>
+            <div class="cal__hdr">Mié</div>
+            <div class="cal__hdr">Jue</div>
+            <div class="cal__hdr">Vie</div>
+            <div class="cal__hdr">Sáb</div>
+            <!-- Semana 1: Jul 1 = miércoles → 3 celdas vacías -->
+            <div class="cal__day cal__day--empty"></div>
+            <div class="cal__day cal__day--empty"></div>
+            <div class="cal__day cal__day--empty"></div>
+            <div class="cal__day">1</div>
+            <div class="cal__day">2</div>
+            <div class="cal__day cal__day--event">3<span class="cal__pip"></span></div>
+            <div class="cal__day">4</div>
+            <!-- Semana 2 -->
+            <div class="cal__day">5</div>
+            <div class="cal__day">6</div>
+            <div class="cal__day">7</div>
+            <div class="cal__day">8</div>
+            <div class="cal__day">9</div>
+            <div class="cal__day">10</div>
+            <div class="cal__day">11</div>
+            <!-- Semana 3 -->
+            <div class="cal__day">12</div>
+            <div class="cal__day">13</div>
+            <div class="cal__day">14</div>
+            <div class="cal__day">15</div>
+            <div class="cal__day">16</div>
+            <div class="cal__day">17</div>
+            <div class="cal__day">18</div>
+            <!-- Semana 4 -->
+            <div class="cal__day">19</div>
+            <div class="cal__day">20</div>
+            <div class="cal__day">21</div>
+            <div class="cal__day">22</div>
+            <div class="cal__day">23</div>
+            <div class="cal__day">24</div>
+            <div class="cal__day">25</div>
+            <!-- Semana 5 -->
+            <div class="cal__day">26</div>
+            <div class="cal__day">27</div>
+            <div class="cal__day">28</div>
+            <div class="cal__day">29</div>
+            <div class="cal__day">30</div>
+            <div class="cal__day">31</div>
+            <div class="cal__day cal__day--empty"></div>
+          </div>
+        </div>
+
+        <div class="cal-btn-area">
+          <button class="btn btn--silver" id="addToCalBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+            Agendar en el calendario
+          </button>
+
+          <div class="cal-picker" id="calPicker">
+            <a
+              href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=XV+de+Mailen+Carmisciano&dates=20260703T220000%2F20260704T020000&ctz=America%2FArgentina%2FBuenos_Aires&details=Fiesta+de+15+a%C3%B1os+de+Mailen+Carmisciano&location=%C3%81lvarez+Jonte+3876%2C+Villa+Devoto%2C+Buenos+Aires"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="cal-picker__option"
+            >
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              Google Calendar
+            </a>
+            <button class="cal-picker__option" id="downloadIcs">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Apple / Outlook (.ics)
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================
+       UBICACIÓN
+  ============================= -->
+  <section id="ubicacion" class="section section--dark reveal">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2 class="section-title">Ubicación</h2>
+        <div class="ornament">
+          <span class="ornament__line"></span>
+          <span class="ornament__gem">◆</span>
+          <span class="ornament__line"></span>
+        </div>
+      </div>
+
+      <div class="location-card reveal">
+        <div class="location-card__name">One Life</div>
+        <p class="location-card__address">
+          Álvarez Jonte 3876<br>
+          Villa Devoto, Buenos Aires
+        </p>
+        <a
+          href="https://maps.app.goo.gl/CzkqttqscyF5CrEk8"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn--outline"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+          Ver en Google Maps
+        </a>
+      </div>
+
+      <div class="map-wrapper reveal">
+        <p class="map-label">Ubicación e Indicaciones</p>
+        <p class="map-sub">Mapa interactivo con la ubicación del evento</p>
+        <iframe
+          class="map-iframe"
+          src="https://maps.google.com/maps?q=Alvarez+Jonte+3876,+Villa+Devoto,+Buenos+Aires,+Argentina&output=embed&hl=es"
+          allowfullscreen
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Ubicación One Life — Álvarez Jonte 3876, Villa Devoto"
+        ></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================
+       RSVP
+       Para activar el formulario:
+       1. Creá una cuenta gratis en https://formspree.io
+       2. Creá un nuevo form y copiá el ID
+       3. Reemplazá "YOUR_FORM_ID" con tu ID real en el atributo action
+  ============================= -->
+  <section id="rsvp" class="section section--deeper">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">¡los espero!</span>
+        <h2 class="section-title">Confirmar Asistencia</h2>
+        <div class="ornament">
+          <span class="ornament__line"></span>
+          <span class="ornament__gem">◆</span>
+          <span class="ornament__line"></span>
+        </div>
+        <p class="section-sub">Completá tus datos para confirmar tu lugar</p>
+      </div>
+
+      <form
+        class="rsvp-form reveal"
+        id="rsvpForm"
+        action="https://formspree.io/f/YOUR_FORM_ID"
+        method="POST"
+      >
+        <div class="form-row">
+          <div class="form-group">
+            <input
+              type="text"
+              name="nombre"
+              placeholder="Nombre"
+              required
+              autocomplete="given-name"
+            >
+          </div>
+          <div class="form-group">
+            <input
+              type="text"
+              name="apellido"
+              placeholder="Apellido"
+              required
+              autocomplete="family-name"
+            >
+          </div>
+        </div>
+        <div class="form-group">
+          <textarea
+            name="restriccion_alimenticia"
+            placeholder="¿Tenés alguna restricción alimenticia? (opcional)"
+            rows="3"
+          ></textarea>
+        </div>
+        <button type="submit" class="btn btn--silver btn--full">
+          Confirmar Asistencia
+        </button>
+      </form>
+
+      <div class="rsvp-success" id="rsvpSuccess">
+        <div class="rsvp-success__sparkle">✨</div>
+        <p class="rsvp-success__title">¡Gracias por confirmar!</p>
+        <p class="rsvp-success__quote">Los espero con mucha emoción.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================
+       FOOTER
+  ============================= -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="ornament">
+        <span class="ornament__line"></span>
+        <span class="ornament__gem">◆</span>
+        <span class="ornament__line"></span>
+      </div>
+      <h3 class="footer__name">Mailen Carmisciano</h3>
+      <p class="footer__quote">Los espero con mucha emoción.</p>
+      <p class="footer__year">2026</p>
+    </div>
+  </footer>
+
+  <div class="footer__legal">
+    © Mailen Carmisciano 2026 &ndash; Todos los derechos reservados &ndash; Sitio creado por <a href="https://www.behance.net/germangnz" target="_blank" rel="noopener noreferrer" class="footer__legal-link">Germán González</a>
+  </div>
+
+  <!-- ============================
+       MUSIC PLAYER
+  ============================= -->
+  <div class="mp" id="mp">
+
+    <!-- Botón circular (siempre visible, arriba) -->
+    <button class="mp__btn" id="mpBtn" aria-label="Reproducir música">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 18V5l12-2v13"/>
+        <circle cx="6" cy="18" r="3"/>
+        <circle cx="18" cy="16" r="3"/>
+      </svg>
+    </button>
+
+    <!-- Notificación (aparece al cargar, desaparece al tocar el botón) -->
+    <div class="mp__notif" id="mpNotif">
+      <div class="mp__notif-bars" id="mpNotifBars">
+        <span></span><span></span><span></span><span></span>
+      </div>
+      <div class="mp__notif-meta">
+        <span class="mp__notif-title">Photograph</span>
+        <span class="mp__notif-artist">Ed Sheeran</span>
+      </div>
+      <button class="mp__notif-close" id="mpNotifClose" aria-label="Cerrar">×</button>
+    </div>
+
+    <!-- Panel de controles (aparece al tocar el botón) -->
+    <div class="mp__panel hidden" id="mpPanel">
+      <div class="mp__head">
+        <div class="mp__bars" id="mpBars">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <div class="mp__meta">
+          <span class="mp__title">Photograph</span>
+          <span class="mp__artist">Ed Sheeran</span>
+        </div>
+        <button class="mp__close" id="mpClose" aria-label="Cerrar">×</button>
+      </div>
+      <div class="mp__ctrl">
+        <button class="mp__play-btn" id="mpPlay" aria-label="Reproducir">
+          <svg id="mpIconPlay" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="5 3 19 12 5 21 5 3"/>
+          </svg>
+          <svg id="mpIconPause" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display:none">
+            <rect x="6" y="4" width="4" height="16"/>
+            <rect x="14" y="4" width="4" height="16"/>
+          </svg>
+        </button>
+        <div class="mp__volume">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+            <path d="M15.54 8.46a5 5 0 010 7.07"/>
+            <path d="M19.07 4.93a10 10 0 010 14.14"/>
+          </svg>
+          <input type="range" id="mpVolume" min="0" max="100" value="60" class="mp__slider" aria-label="Volumen">
+        </div>
+      </div>
+    </div>
+
+    <!-- Audio -->
+    <audio id="mpAudio" loop preload="auto" autoplay muted>
+      <source src="Ed Sheeran - Photograph (Official Lyric Video).mp3" type="audio/mpeg">
+    </audio>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
