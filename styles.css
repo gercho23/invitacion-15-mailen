@@ -691,7 +691,7 @@ button {
   background: #161616;
   border: 1px solid rgba(192, 192, 192, 0.18);
   min-width: 230px;
-  z-index: 50;
+  z-index: 200;
   display: none;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
 }
@@ -1540,6 +1540,13 @@ footer.reveal.visible,
   .btn { padding: 14px 22px; font-size: 0.66rem; letter-spacing: 0.18em; }
 
   /* Ubicación */
+  /* Calendario: picker abre hacia arriba para no quedar tapado */
+  .cal-picker {
+    top: auto;
+    bottom: calc(100% + 10px);
+    box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.6);
+  }
+
   .location-card        { padding: 40px 24px; }
   .location-card__name  { font-size: 1.7rem; }
   .map-wrapper          { margin-top: 32px; }
