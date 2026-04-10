@@ -468,8 +468,9 @@ sections.forEach(s => sectionObserver.observe(s));
   const mpNotifPlay      = document.getElementById('mpNotifPlay');
   const mpNotifIconPlay  = document.getElementById('mpNotifIconPlay');
   const mpNotifIconPause = document.getElementById('mpNotifIconPause');
+  const mpVolume         = document.getElementById('mpVolume');
 
-  audio.volume = 0.6;
+  audio.volume = parseInt(mpVolume.value, 10) / 100;
 
   /* ---- Mostrar / ocultar notificación ---- */
   function showNotif() {
@@ -477,20 +478,25 @@ sections.forEach(s => sectionObserver.observe(s));
     mpBtn.classList.add('active');
   }
 
-  function hideNotif() {
+  function hideNotif(animated = true) {
     if (mpNotif.classList.contains('gone')) return;
-    mpNotif.classList.add('out');
-    mpNotif.addEventListener('animationend', () => {
+    if (animated) {
+      mpNotif.classList.add('out');
+      mpNotif.addEventListener('animationend', () => {
+        mpNotif.classList.add('gone');
+      }, { once: true });
+    } else {
+      mpNotif.classList.remove('out');
       mpNotif.classList.add('gone');
-    }, { once: true });
+    }
     mpBtn.classList.remove('active');
   }
 
-  mpNotifClose.addEventListener('click', hideNotif);
+  /* × cierra con animación; botón circular cierra al instante (sin lag) */
+  mpNotifClose.addEventListener('click', () => hideNotif(true));
 
-  /* ---- Botón principal: alterna la notificación ---- */
   mpBtn.addEventListener('click', () => {
-    mpNotif.classList.contains('gone') ? showNotif() : hideNotif();
+    mpNotif.classList.contains('gone') ? showNotif() : hideNotif(false);
   });
 
   /* ---- Play / Pause ---- */
@@ -507,6 +513,11 @@ sections.forEach(s => sectionObserver.observe(s));
 
   audio.addEventListener('play',  () => setPlaying(true));
   audio.addEventListener('pause', () => setPlaying(false));
+
+  /* ---- Volumen ---- */
+  mpVolume.addEventListener('input', () => {
+    audio.volume = parseInt(mpVolume.value, 10) / 100;
+  });
 
   /* ---- Autoplay por gesto ---- */
   const gestureEvents = ['pointerdown', 'touchstart', 'keydown'];

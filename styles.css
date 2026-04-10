@@ -1348,16 +1348,22 @@ button {
 
 /* ---- Notificación ---- */
 .mp__notif {
-  width: 248px;
+  width: 258px;
   background: rgba(11, 11, 11, 0.97);
   border: 1px solid rgba(192, 192, 192, 0.18);
   backdrop-filter: blur(20px);
-  padding: 13px 14px 13px 16px;
+  padding: 13px 14px 14px 16px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.65);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  animation: notifIn 0.5s 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.mp__notif-row {
   display: flex;
   align-items: center;
   gap: 12px;
-  animation: notifIn 0.5s 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
 .mp__notif.out {
@@ -1452,6 +1458,44 @@ button {
   flex-shrink: 0;
 }
 .mp__notif-close:hover { color: var(--white); }
+
+.mp__notif-vol {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--silver-dark);
+}
+
+.mp__notif-slider {
+  flex: 1;
+  -webkit-appearance: none;
+  height: 2px;
+  background: rgba(192, 192, 192, 0.2);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+.mp__notif-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--silver);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.mp__notif-slider::-webkit-slider-thumb:hover { transform: scale(1.35); }
+
+.mp__notif-slider::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--silver);
+  border: none;
+  cursor: pointer;
+}
 
 @keyframes mpBar {
   0%, 100% { height: 4px; }
