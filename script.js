@@ -6,11 +6,13 @@ if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 window.scrollTo(0, 0);
 
 // Variable --vh real para iOS Safari (evita que la barra del browser corte el hero)
+// Solo se recalcula al cargar y al cambiar orientación — nunca en resize,
+// porque en iOS el resize se dispara al ocultar/mostrar la barra del browser.
 function setVh() {
   document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
 }
 setVh();
-window.addEventListener('resize', setVh);
+window.addEventListener('orientationchange', () => setTimeout(setVh, 150));
 
 /* =============================================
    PARTÍCULAS + DIAMANTES CAYENDO
