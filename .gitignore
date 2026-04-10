@@ -2,3 +2,5 @@
 .claude/
 # PNGs originales sin comprimir (usar los JPG de book/)
 book/*.png
+# Videos — hosteados en Cloudinary
+*.mp4
