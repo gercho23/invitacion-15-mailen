@@ -506,7 +506,9 @@ button {
   position: relative;
   overflow: hidden;
   aspect-ratio: 4 / 5;
+  max-width: 480px;
   max-height: 80vh;
+  margin: 0 auto;
   user-select: none;
 }
 
