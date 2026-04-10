@@ -489,3 +489,18 @@ sections.forEach(s => sectionObserver.observe(s));
     document.addEventListener(ev, startAudio, { passive: true })
   );
 }());
+
+/* =============================================
+   BOTÓN VOLVER ARRIBA
+   ============================================= */
+(function () {
+  const btn = document.getElementById('backTop');
+
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('visible', window.scrollY > 400);
+  }, { passive: true });
+
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}());
