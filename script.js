@@ -22,6 +22,9 @@ window.addEventListener('orientationchange', () => setTimeout(setVh, 150));
   const ctx    = canvas.getContext('2d');
   const hero   = document.getElementById('hero');
   let particles = [];
+  let lastFrame = 0;
+  const FPS     = 30;
+  const INTERVAL = 1000 / FPS;
 
   function resize() {
     canvas.width  = hero.offsetWidth;
@@ -32,22 +35,19 @@ window.addEventListener('orientationchange', () => setTimeout(setVh, 150));
     return {
       x:          Math.random() * canvas.width,
       y:          randomY ? Math.random() * canvas.height : canvas.height + 12,
-      size:       Math.random() * 2.8 + 0.6,
+      size:       Math.random() * 2.2 + 0.5,
       vy:         -(Math.random() * 0.35 + 0.08),
       vx:         (Math.random() - 0.5) * 0.12,
-      alpha:      Math.random() * 0.4 + 0.05,
+      alpha:      Math.random() * 0.45 + 0.05,
       alphaSpeed: Math.random() * 0.004 + 0.001,
       alphaDir:   Math.random() > 0.5 ? 1 : -1,
     };
   }
 
-  // Estrella de 4 puntas (sparkle ✦)
+  // Estrella de 4 puntas sin shadowBlur (costoso)
   function drawStar(x, y, size, alpha) {
-    ctx.save();
     ctx.globalAlpha = alpha;
     ctx.fillStyle   = '#d8d8d8';
-    ctx.shadowColor = 'rgba(220,220,220,0.9)';
-    ctx.shadowBlur  = size * 4;
     ctx.beginPath();
     for (let i = 0; i < 8; i++) {
       const angle = (i * Math.PI) / 4;
@@ -57,31 +57,34 @@ window.addEventListener('orientationchange', () => setTimeout(setVh, 150));
     }
     ctx.closePath();
     ctx.fill();
-    ctx.restore();
   }
 
   function init() {
     particles = [];
-    const count = Math.min(80, Math.floor((canvas.width * canvas.height) / 9000));
+    const count = Math.min(45, Math.floor((canvas.width * canvas.height) / 16000));
     for (let i = 0; i < count; i++) particles.push(makeParticle(true));
   }
 
-  function draw() {
+  function draw(ts) {
+    requestAnimationFrame(draw);
+    if (ts - lastFrame < INTERVAL) return;
+    lastFrame = ts;
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     particles.forEach((p, i) => {
       p.x += p.vx;
       p.y += p.vy;
       p.alpha += p.alphaSpeed * p.alphaDir;
-      if (p.alpha > 0.65 || p.alpha < 0.03) p.alphaDir *= -1;
+      if (p.alpha > 0.6 || p.alpha < 0.03) p.alphaDir *= -1;
       if (p.y < -12) particles[i] = makeParticle(false);
       drawStar(p.x, p.y, p.size, p.alpha);
     });
-    requestAnimationFrame(draw);
+    ctx.globalAlpha = 1;
   }
 
   resize();
   init();
-  draw();
+  requestAnimationFrame(draw);
   window.addEventListener('resize', () => { resize(); init(); });
 })();
 
