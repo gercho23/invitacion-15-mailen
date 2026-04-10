@@ -1147,6 +1147,19 @@ button {
   margin-top: 2px;
 }
 
+/* Botón play en notificación — solo visible en mobile */
+.mp__notif-play {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--silver-light);
+  cursor: pointer;
+  padding: 4px 6px;
+  flex-shrink: 0;
+  transition: color 0.2s;
+}
+.mp__notif-play:hover { color: var(--white); }
+
 .mp__notif-close {
   background: none;
   border: none;
@@ -1562,10 +1575,11 @@ footer.reveal.visible,
   .footer__legal        { font-size: 0.65rem; padding: 16px 20px; line-height: 1.9; }
 
   /* Reproductor de música */
-  .mp         { top: 16px; right: 16px; }
-  .mp__btn    { width: 44px; height: 44px; }
-  .mp__panel  { width: calc(100vw - 80px); max-width: 280px; }
-  .mp__notif  { width: calc(100vw - 80px); max-width: 260px; }
+  .mp              { top: 16px; right: 16px; }
+  .mp__btn         { width: 44px; height: 44px; }
+  .mp__panel       { display: none !important; }
+  .mp__notif       { width: calc(100vw - 80px); max-width: 280px; }
+  .mp__notif-play  { display: flex; align-items: center; }
 }
 
 /* =============================================

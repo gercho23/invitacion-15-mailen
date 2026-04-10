@@ -411,11 +411,16 @@ sections.forEach(s => sectionObserver.observe(s));
   const mpIconPause    = document.getElementById('mpIconPause');
   const mpVolume       = document.getElementById('mpVolume');
   const mpBars         = document.getElementById('mpBars');
-  const mpNotif        = document.getElementById('mpNotif');
-  const mpNotifClose   = document.getElementById('mpNotifClose');
-  const mpNotifBars    = document.getElementById('mpNotifBars');
+  const mpNotif          = document.getElementById('mpNotif');
+  const mpNotifClose     = document.getElementById('mpNotifClose');
+  const mpNotifBars      = document.getElementById('mpNotifBars');
+  const mpNotifPlay      = document.getElementById('mpNotifPlay');
+  const mpNotifIconPlay  = document.getElementById('mpNotifIconPlay');
+  const mpNotifIconPause = document.getElementById('mpNotifIconPause');
 
   audio.volume = parseInt(mpVolume.value, 10) / 100;
+
+  const isMobile = () => window.innerWidth <= 640;
 
   /* ---- Notificación ---- */
   function dismissNotif() {
@@ -426,10 +431,33 @@ sections.forEach(s => sectionObserver.observe(s));
     }, { once: true });
   }
 
-  mpNotifClose.addEventListener('click', dismissNotif);
+  function showNotif() {
+    mpNotif.classList.remove('gone', 'out');
+  }
 
-  /* ---- Botón principal: cierra notif y abre panel ---- */
+  /* En mobile el × solo oculta; en desktop descarta para siempre */
+  mpNotifClose.addEventListener('click', () => {
+    if (isMobile()) {
+      mpNotif.classList.add('gone');
+    } else {
+      dismissNotif();
+    }
+  });
+
+  /* ---- Botón principal ---- */
   mpBtn.addEventListener('click', () => {
+    if (isMobile()) {
+      // Mobile: alterna la notificación combinada (sin panel)
+      if (mpNotif.classList.contains('gone')) {
+        showNotif();
+        mpBtn.classList.add('active');
+      } else {
+        mpNotif.classList.add('gone');
+        mpBtn.classList.remove('active');
+      }
+      return;
+    }
+    // Desktop: comportamiento original
     dismissNotif();
     mpPanel.classList.toggle('hidden');
     mpBtn.classList.toggle('active', !mpPanel.classList.contains('hidden'));
@@ -445,10 +473,16 @@ sections.forEach(s => sectionObserver.observe(s));
     audio.paused ? audio.play() : audio.pause();
   });
 
+  mpNotifPlay.addEventListener('click', () => {
+    audio.paused ? audio.play() : audio.pause();
+  });
+
   /* ---- Sincronizar barras e íconos ---- */
   function setPlaying(state) {
-    mpIconPlay.style.display  = state ? 'none'   : 'inline';
-    mpIconPause.style.display = state ? 'inline' : 'none';
+    mpIconPlay.style.display       = state ? 'none'   : 'inline';
+    mpIconPause.style.display      = state ? 'inline' : 'none';
+    mpNotifIconPlay.style.display  = state ? 'none'   : 'inline';
+    mpNotifIconPause.style.display = state ? 'inline' : 'none';
     mpBars.classList.toggle('playing', state);
     mpNotifBars.classList.toggle('playing', state);
   }
