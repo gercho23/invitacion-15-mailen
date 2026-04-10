@@ -475,13 +475,15 @@ sections.forEach(s => sectionObserver.observe(s));
      y arrancamos el audio con volumen completo. */
   audio.volume = parseInt(mpVolume.value, 10) / 100;
 
-  const gestureEvents = ['click', 'touchstart', 'mousemove', 'keydown'];
+  // pointerdown: dispara al presionar el mouse (antes del click) → más rápido en desktop
+  // touchstart: primer toque en mobile
+  // keydown: teclado
+  const gestureEvents = ['pointerdown', 'touchstart', 'keydown'];
 
   function startAudio() {
     audio.play()
       .then(() => {
         gestureEvents.forEach(ev => document.removeEventListener(ev, startAudio));
-        scrollObserver.disconnect();
       })
       .catch(() => {});
   }
@@ -489,13 +491,6 @@ sections.forEach(s => sectionObserver.observe(s));
   gestureEvents.forEach(ev =>
     document.addEventListener(ev, startAudio, { passive: true })
   );
-
-  // Arrancar también cuando el hero sale del viewport (scroll confiable en mobile)
-  const scrollObserver = new IntersectionObserver(
-    ([entry]) => { if (!entry.isIntersecting) startAudio(); },
-    { threshold: 0 }
-  );
-  scrollObserver.observe(document.getElementById('hero'));
 }());
 
 /* =============================================
