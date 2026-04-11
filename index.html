@@ -12,8 +12,9 @@
   <meta property="og:url"         content="https://mailencarmisciano.vercel.app/">
   <meta property="og:title"       content="Mis 15 años · Mailen Carmisciano">
   <meta property="og:description" content="Te invito a celebrar mis 15 años · Viernes 3 de Julio 2026 · One Life, Villa del Parque">
-  <meta property="og:image"       content="https://mailencarmisciano.vercel.app/book/BOSQUE_1.jpg">
-  <meta property="og:image:width" content="1920">
+  <meta property="og:image"        content="https://mailencarmisciano.vercel.app/og-image.jpg">
+  <meta property="og:image:width"  content="1200">
+  <meta property="og:image:height" content="630">
   <meta property="og:locale"      content="es_AR">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -264,10 +265,13 @@
   <!-- Lightbox -->
   <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Foto ampliada">
     <button class="lightbox__close" id="lightboxClose" aria-label="Cerrar">&times;</button>
+    <button class="lightbox__prev"  id="lightboxPrev"  aria-label="Anterior">&#8249;</button>
+    <button class="lightbox__next"  id="lightboxNext"  aria-label="Siguiente">&#8250;</button>
     <div class="lightbox__wrapper">
       <img class="lightbox__img" id="lightboxImg" src="" alt="Mailen">
       <div class="lightbox__shield"></div>
     </div>
+    <div class="lightbox__counter" id="lightboxCounter"></div>
   </div>
 
   <!-- ============================

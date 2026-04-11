@@ -260,13 +260,9 @@ setInterval(updateCountdown, 1000);
     if (Math.abs(diff) > 50) { goTo(current + (diff > 0 ? 1 : -1)); resetAuto(); }
   });
 
-  // Click → lightbox
-  slides.forEach(slide => {
-    slide.addEventListener('click', () => {
-      lightboxImg.src = slide.dataset.src;
-      lightbox.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    });
+  // Click → lightbox (pasa el índice a la función global)
+  slides.forEach((slide, i) => {
+    slide.addEventListener('click', () => lbOpen(i));
   });
 
   // Recalcular en resize
@@ -307,13 +303,28 @@ document.addEventListener('contextmenu', (e) => {
 });
 
 /* =============================================
-   GALERÍA — LIGHTBOX
+   GALERÍA — LIGHTBOX CON NAVEGACIÓN
    ============================================= */
-const lightbox     = document.getElementById('lightbox');
-const lightboxImg  = document.getElementById('lightboxImg');
-const lightboxClose = document.getElementById('lightboxClose');
+const lightbox        = document.getElementById('lightbox');
+const lightboxImg     = document.getElementById('lightboxImg');
+const lightboxClose   = document.getElementById('lightboxClose');
+const lightboxPrev    = document.getElementById('lightboxPrev');
+const lightboxNext    = document.getElementById('lightboxNext');
+const lightboxCounter = document.getElementById('lightboxCounter');
 
-// El lightbox ahora lo abre el carrusel directamente (ver arriba)
+// Recolectar todas las fotos del carrusel en orden
+const lbSrcs = Array.from(document.querySelectorAll('.carousel__slide')).map(s => s.dataset.src);
+let lbIdx = 0;
+
+function lbOpen(idx) {
+  lbIdx = ((idx % lbSrcs.length) + lbSrcs.length) % lbSrcs.length;
+  lightboxImg.src = lbSrcs[lbIdx];
+  lightboxCounter.textContent = `${lbIdx + 1} / ${lbSrcs.length}`;
+  lightbox.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function lbNavigate(dir) { lbOpen(lbIdx + dir); }
 
 function closeLightbox() {
   lightbox.classList.remove('open');
@@ -322,11 +333,23 @@ function closeLightbox() {
 }
 
 lightboxClose.addEventListener('click', closeLightbox);
-lightbox.addEventListener('click', e => {
-  if (e.target === lightbox) closeLightbox();
-});
+lightboxPrev.addEventListener('click',  e => { e.stopPropagation(); lbNavigate(-1); });
+lightboxNext.addEventListener('click',  e => { e.stopPropagation(); lbNavigate(1);  });
+lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeLightbox();
+  if (!lightbox.classList.contains('open')) return;
+  if (e.key === 'Escape')     closeLightbox();
+  if (e.key === 'ArrowLeft')  lbNavigate(-1);
+  if (e.key === 'ArrowRight') lbNavigate(1);
+});
+
+// Swipe en mobile
+let lbTx = 0;
+lightbox.addEventListener('touchstart', e => { lbTx = e.touches[0].clientX; }, { passive: true });
+lightbox.addEventListener('touchend',   e => {
+  const diff = lbTx - e.changedTouches[0].clientX;
+  if (Math.abs(diff) > 50) lbNavigate(diff > 0 ? 1 : -1);
 });
 
 /* =============================================

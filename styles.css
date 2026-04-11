@@ -714,6 +714,48 @@ button {
 
 .lightbox__close:hover { color: var(--white); }
 
+.lightbox__prev,
+.lightbox__next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1002;
+  width: 52px;
+  height: 52px;
+  background: rgba(8, 8, 8, 0.65);
+  border: 1px solid rgba(192, 192, 192, 0.2);
+  color: var(--silver-light);
+  font-size: 2.6rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.lightbox__prev { left: 24px; }
+.lightbox__next { right: 24px; }
+.lightbox__prev:hover,
+.lightbox__next:hover {
+  background: rgba(30, 30, 30, 0.9);
+  border-color: rgba(192, 192, 192, 0.45);
+  color: var(--white);
+}
+
+.lightbox__counter {
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  color: var(--silver-dark);
+  z-index: 1002;
+  white-space: nowrap;
+}
+
 /* =============================================
    CALENDAR
    ============================================= */
