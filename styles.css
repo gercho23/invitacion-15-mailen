@@ -541,12 +541,23 @@ button {
   pointer-events: none;
   user-select: none;
   -webkit-user-drag: none;
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.carousel__slide:hover img {
+  transform: scale(1.05);
 }
 
 .carousel__shield {
   position: absolute;
   inset: 0;
   z-index: 1;
+  background: rgba(0, 0, 0, 0);
+  transition: background 0.5s ease;
+}
+
+.carousel__slide:hover .carousel__shield {
+  background: rgba(0, 0, 0, 0.18);
 }
 
 .carousel__hint {
