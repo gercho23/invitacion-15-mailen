@@ -492,6 +492,10 @@ sections.forEach(s => sectionObserver.observe(s));
   const mpNotifIconPlay  = document.getElementById('mpNotifIconPlay');
   const mpNotifIconPause = document.getElementById('mpNotifIconPause');
   const mpVolume         = document.getElementById('mpVolume');
+  const mpMuteBtn        = document.getElementById('mpMuteBtn');
+  const mpIconVol        = document.getElementById('mpIconVol');
+  const mpIconMute       = document.getElementById('mpIconMute');
+  const mpNotifVol       = document.querySelector('.mp__notif-vol');
 
   audio.volume = parseInt(mpVolume.value, 10) / 100;
 
@@ -540,7 +544,19 @@ sections.forEach(s => sectionObserver.observe(s));
   /* ---- Volumen ---- */
   mpVolume.addEventListener('input', () => {
     audio.volume = parseInt(mpVolume.value, 10) / 100;
+    if (audio.muted) toggleMute(); // si estaba muteado, desmutearlo al mover el slider
   });
+
+  /* ---- Mute ---- */
+  function toggleMute() {
+    audio.muted = !audio.muted;
+    mpIconVol.style.display  = audio.muted ? 'none'   : 'inline';
+    mpIconMute.style.display = audio.muted ? 'inline' : 'none';
+    mpMuteBtn.classList.toggle('muted', audio.muted);
+    mpNotifVol.classList.toggle('muted', audio.muted);
+  }
+
+  mpMuteBtn.addEventListener('click', toggleMute);
 
   /* ---- Autoplay por gesto ---- */
   const gestureEvents = ['pointerdown', 'touchstart', 'keydown'];

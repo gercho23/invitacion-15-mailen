@@ -1517,6 +1517,23 @@ button {
   color: var(--silver-dark);
 }
 
+.mp__mute-btn {
+  background: none;
+  border: none;
+  color: var(--silver-dark);
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  transition: color 0.2s;
+}
+.mp__mute-btn:hover { color: var(--white); }
+.mp__mute-btn.muted  { color: var(--silver-mid); }
+
+/* Slider atenuado cuando está muteado */
+.mp__notif-vol.muted .mp__notif-slider { opacity: 0.35; }
+
 .mp__notif-slider {
   flex: 1;
   -webkit-appearance: none;
