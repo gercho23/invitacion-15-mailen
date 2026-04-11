@@ -612,13 +612,10 @@ button {
 }
 
 .carousel__dots {
-  position: absolute;
-  bottom: 18px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 3;
   display: flex;
+  justify-content: center;
   gap: 8px;
+  margin-top: 16px;
 }
 
 .carousel__dot {
