@@ -1518,18 +1518,18 @@ button {
 }
 
 .mp__mute-btn {
-  background: none;
-  border: none;
-  color: var(--silver-dark);
+  /* Reset completo para que se vea idéntico al SVG estático de antes */
+  all: unset;
   cursor: pointer;
-  padding: 0;
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  line-height: 0;
   flex-shrink: 0;
+  color: inherit;
   transition: color 0.2s;
 }
-.mp__mute-btn:hover { color: var(--white); }
-.mp__mute-btn.muted  { color: var(--silver-mid); }
+.mp__mute-btn:hover { color: var(--silver-light); }
+.mp__mute-btn.muted { color: var(--silver-mid); }
 
 /* Slider atenuado cuando está muteado */
 .mp__notif-vol.muted .mp__notif-slider { opacity: 0.35; }
