@@ -501,29 +501,28 @@ sections.forEach(s => sectionObserver.observe(s));
 
   /* ---- Mostrar / ocultar notificación ---- */
   function showNotif() {
-    mpNotif.classList.remove('gone', 'out');
+    mpNotif.classList.remove('gone');
+    mpNotif.offsetHeight; // force reflow para que la transition arranque desde el estado oculto
+    mpNotif.classList.add('visible');
     mpBtn.classList.add('active');
   }
 
-  function hideNotif(animated = true) {
-    if (mpNotif.classList.contains('gone')) return;
-    if (animated) {
-      mpNotif.classList.add('out');
-      mpNotif.addEventListener('animationend', () => {
-        mpNotif.classList.add('gone');
-      }, { once: true });
-    } else {
-      mpNotif.classList.remove('out');
-      mpNotif.classList.add('gone');
-    }
+  function hideNotif() {
+    if (!mpNotif.classList.contains('visible')) return;
+    mpNotif.classList.remove('visible');
     mpBtn.classList.remove('active');
+    mpNotif.addEventListener('transitionend', () => {
+      if (!mpNotif.classList.contains('visible')) mpNotif.classList.add('gone');
+    }, { once: true });
   }
 
-  /* × cierra con animación; botón circular cierra al instante (sin lag) */
-  mpNotifClose.addEventListener('click', () => hideNotif(true));
+  /* Entrada automática al cargar (1 segundo de delay) */
+  setTimeout(showNotif, 1000);
+
+  mpNotifClose.addEventListener('click', hideNotif);
 
   mpBtn.addEventListener('click', () => {
-    mpNotif.classList.contains('gone') ? showNotif() : hideNotif(false);
+    mpNotif.classList.contains('visible') ? hideNotif() : showNotif();
   });
 
   /* ---- Play / Pause ---- */
