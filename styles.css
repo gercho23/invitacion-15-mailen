@@ -300,12 +300,13 @@ button {
 
 .intro-msg__text {
   font-family: var(--font-serif);
-  font-size: clamp(1.05rem, 2.5vw, 1.3rem);
+  font-size: clamp(1.2rem, 2.8vw, 1.5rem);
   font-weight: 300;
   font-style: italic;
   color: rgba(255, 255, 255, 0.82);
   line-height: 1.85;
   letter-spacing: 0.02em;
+  text-wrap: balance;
 }
 
 #ubicacion {
@@ -1835,7 +1836,7 @@ footer.reveal.visible,
 
   /* Mensaje introductorio */
   .intro-msg         { padding: 56px 28px; }
-  .intro-msg__text   { font-size: 1rem; line-height: 1.75; }
+  .intro-msg__text   { font-size: 1.1rem; line-height: 1.8; }
 
   /* Cuenta regresiva */
   .countdown         { gap: 4px; }
