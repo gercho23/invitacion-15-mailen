@@ -376,7 +376,7 @@ document.getElementById('downloadIcs').addEventListener('click', () => {
     'CALSCALE:GREGORIAN',
     'BEGIN:VEVENT',
     'DTSTART;TZID=America/Argentina/Buenos_Aires:20260703T220000',
-    'DTEND;TZID=America/Argentina/Buenos_Aires:20260704T020000',
+    'DTEND;TZID=America/Argentina/Buenos_Aires:20260704T030000',
     'SUMMARY:XV de Mailen Carmisciano',
     'DESCRIPTION:¡Fiesta de 15 años de Mailen Carmisciano! Los espero con mucha emoción.',
     'LOCATION:Álvarez Jonte 3876\\, Villa Devoto\\, Buenos Aires',
