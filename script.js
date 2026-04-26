@@ -15,17 +15,17 @@ setVh();
 window.addEventListener('orientationchange', () => setTimeout(setVh, 150));
 
 /* =============================================
-   PARTÍCULAS — ESTRELLAS FLOTANDO EN EL HERO
+   PARTÍCULAS — BRILLITOS FLOTANDO EN TODAS LAS SECCIONES
    ============================================= */
 (function () {
   const INTERVAL = 1000 / 30; // 30 fps
   let lastFrame  = 0;
 
-  // Un registro por sección: canvas + elemento host
+  // Capas con canvas ya existentes en el HTML
   const layers = [
-    { id: 'particles',          hostId: 'hero',      maxCount: 45 },
-    { id: 'particles-intro',    hostSel: '.intro-msg', maxCount: 25 },
-    { id: 'particles-countdown',hostId: 'countdown',  maxCount: 25 },
+    { id: 'particles',           hostId:  'hero',       maxCount: 60 },
+    { id: 'particles-intro',     hostSel: '.intro-msg', maxCount: 38 },
+    { id: 'particles-countdown', hostId:  'countdown',  maxCount: 38 },
   ].map(cfg => {
     const canvas = document.getElementById(cfg.id);
     const host   = cfg.hostId ? document.getElementById(cfg.hostId)
@@ -33,38 +33,73 @@ window.addEventListener('orientationchange', () => setTimeout(setVh, 150));
     return { canvas, ctx: canvas.getContext('2d'), host, particles: [], maxCount: cfg.maxCount };
   });
 
+  // Inyectar canvas en el resto de las secciones automáticamente
+  document.querySelectorAll('.section').forEach(section => {
+    if (section.id === 'countdown') return;
+    const canvas       = document.createElement('canvas');
+    canvas.className   = 'particles-canvas particles-canvas--section';
+    section.insertBefore(canvas, section.firstChild);
+    layers.push({ canvas, ctx: canvas.getContext('2d'), host: section, particles: [], maxCount: 28 });
+  });
+
   function makeParticle(w, h, randomY) {
     return {
       x:          Math.random() * w,
       y:          randomY ? Math.random() * h : h + 12,
-      size:       Math.random() * 2.2 + 0.5,
-      vy:         -(Math.random() * 0.35 + 0.08),
-      vx:         (Math.random() - 0.5) * 0.12,
-      alpha:      Math.random() * 0.45 + 0.05,
-      alphaSpeed: Math.random() * 0.004 + 0.001,
+      size:       Math.random() * 2.6 + 0.5,
+      vy:         -(Math.random() * 0.38 + 0.07),
+      vx:         (Math.random() - 0.5) * 0.14,
+      alpha:      Math.random() * 0.55 + 0.05,
+      alphaSpeed: Math.random() * 0.006 + 0.001,
       alphaDir:   Math.random() > 0.5 ? 1 : -1,
+      rot:        Math.random() * Math.PI,
+      rotSpeed:   (Math.random() - 0.5) * 0.04,
+      type:       Math.random() > 0.4 ? 'star' : 'dot',
     };
   }
 
-  function drawStar(ctx, x, y, size, alpha) {
-    ctx.globalAlpha = alpha;
-    ctx.fillStyle   = '#d8d8d8';
-    ctx.beginPath();
-    for (let i = 0; i < 8; i++) {
-      const angle = (i * Math.PI) / 4;
-      const r     = i % 2 === 0 ? size : size * 0.28;
-      if (i === 0) ctx.moveTo(x + Math.cos(angle) * r, y + Math.sin(angle) * r);
-      else         ctx.lineTo(x + Math.cos(angle) * r, y + Math.sin(angle) * r);
+  function drawParticle(ctx, p) {
+    if (p.type === 'dot') {
+      ctx.globalAlpha = p.alpha * 0.65;
+      ctx.fillStyle   = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size * 0.55, 0, Math.PI * 2);
+      ctx.fill();
+    } else {
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      // Halo suave en estrellas grandes
+      if (p.size > 1.9) {
+        const g = ctx.createRadialGradient(0, 0, 0, 0, 0, p.size * 3.2);
+        g.addColorStop(0, `rgba(210,210,210,${p.alpha * 0.3})`);
+        g.addColorStop(1, 'rgba(210,210,210,0)');
+        ctx.globalAlpha = 1;
+        ctx.fillStyle   = g;
+        ctx.beginPath();
+        ctx.arc(0, 0, p.size * 3.2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalAlpha = p.alpha;
+      ctx.fillStyle   = '#d8d8d8';
+      ctx.beginPath();
+      for (let i = 0; i < 8; i++) {
+        const angle = (i * Math.PI) / 4;
+        const r     = i % 2 === 0 ? p.size : p.size * 0.28;
+        if (i === 0) ctx.moveTo(Math.cos(angle) * r, Math.sin(angle) * r);
+        else         ctx.lineTo(Math.cos(angle) * r, Math.sin(angle) * r);
+      }
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
     }
-    ctx.closePath();
-    ctx.fill();
   }
 
   function init() {
     layers.forEach(l => {
       l.canvas.width  = l.host.offsetWidth;
       l.canvas.height = l.host.offsetHeight;
-      const count = Math.min(l.maxCount, Math.floor((l.canvas.width * l.canvas.height) / 16000));
+      const count = Math.min(l.maxCount, Math.floor((l.canvas.width * l.canvas.height) / 13000));
       l.particles = Array.from({ length: count }, () => makeParticle(l.canvas.width, l.canvas.height, true));
     });
   }
@@ -78,11 +113,13 @@ window.addEventListener('orientationchange', () => setTimeout(setVh, 150));
       const { ctx, canvas, particles } = l;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       particles.forEach((p, i) => {
-        p.x += p.vx;  p.y += p.vy;
+        p.x   += p.vx;
+        p.y   += p.vy;
+        p.rot += p.rotSpeed;
         p.alpha += p.alphaSpeed * p.alphaDir;
-        if (p.alpha > 0.6 || p.alpha < 0.03) p.alphaDir *= -1;
+        if (p.alpha > 0.7 || p.alpha < 0.03) p.alphaDir *= -1;
         if (p.y < -12) l.particles[i] = makeParticle(canvas.width, canvas.height, false);
-        drawStar(ctx, p.x, p.y, p.size, p.alpha);
+        drawParticle(ctx, p);
       });
       ctx.globalAlpha = 1;
     });
