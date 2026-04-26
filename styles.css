@@ -275,7 +275,7 @@ button {
 .section {
   position: relative;
   z-index: 1;
-  padding: 110px 24px;
+  padding: 80px 24px;
 }
 
 .section--dark   { background-color: var(--dark); }
@@ -347,7 +347,7 @@ button {
 .section-title {
   font-family: var(--font-sans);
   font-weight: 300;
-  font-size: 0.68rem;
+  font-size: 0.82rem;
   letter-spacing: 0.45em;
   text-transform: uppercase;
   color: var(--silver);
@@ -1811,7 +1811,7 @@ footer.reveal.visible,
   .side-nav { display: none; }
 
   /* Secciones */
-  .section { padding: 72px 20px; }
+  .section { padding: 56px 20px; }
 
   /* Hero */
   .hero__content { padding: 0 20px 130px; }
